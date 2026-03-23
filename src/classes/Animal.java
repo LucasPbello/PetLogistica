@@ -1,8 +1,6 @@
 package classes;
 
-import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
 
 /**
  *
@@ -10,7 +8,7 @@ import java.util.List;
  */
 public class Animal {
 
-   private int idAnimal;
+    private int idAnimal;
     private String nome;
     private String raca;
     private String cor;
@@ -19,16 +17,16 @@ public class Animal {
     private String caixaTransporte;
     private Date dataNascimento;
     private String microchip;
-    
-    private byte[] carteirinha;
-    private byte[] documentos;
-    private byte[] imagens;
+
+    private String carteirinha;
+    private String documentos;
+    private String imagens;
 
     private Cliente cliente;
     private OrigemDestino origemDestino;
 
-
-    public Animal() {}
+    public Animal() {
+    }
 
     public int getIdAnimal() {
         return idAnimal;
@@ -102,29 +100,30 @@ public class Animal {
         this.microchip = microchip;
     }
 
-    public byte[] getCarteirinha() {
+    public String getCarteirinha() {
         return carteirinha;
     }
 
-    public void setCarteirinha(byte[] carteirinha) {
+    public void setCarteirinha(String carteirinha) {
         this.carteirinha = carteirinha;
     }
 
-    public byte[] getDocumentos() {
+    public String getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(byte[] documentos) {
+    public void setDocumentos(String documentos) {
         this.documentos = documentos;
     }
 
-    public byte[] getImagens() {
+    public String getImagens() {
         return imagens;
     }
 
-    public void setImagens(byte[] imagens) {
+    public void setImagens(String imagens) {
         this.imagens = imagens;
     }
+
 
     public Cliente getCliente() {
         return cliente;
@@ -141,8 +140,5 @@ public class Animal {
     public void setOrigemDestino(OrigemDestino origemDestino) {
         this.origemDestino = origemDestino;
     }
-
-    
-
 
 }

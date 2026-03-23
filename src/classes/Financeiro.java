@@ -15,12 +15,9 @@ public class Financeiro {
     private BigDecimal pagamentoFuncionarios;
     private BigDecimal lucroTotal;
     private Cliente cliente;
-    
-   
 
     public Financeiro() {
     }
-
 
     public int getIdFinanceiro() {
         return idFinanceiro;
@@ -77,8 +74,11 @@ public class Financeiro {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
 
-   
+    public BigDecimal calcularLucro() {
+        return clienteTotal
+                .subtract(gastoEmpresa)
+                .subtract(pagamentoFuncionarios);
+    }
 
 }

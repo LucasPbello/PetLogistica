@@ -27,9 +27,10 @@ public class ClienteDAO {
            
 
             stmt.executeUpdate();
+            System.out.println("Cliente inserido!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao inserir Cliente: " + e.getMessage());
         }
     }
 
@@ -43,13 +44,14 @@ public class ClienteDAO {
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getEmail());
             stmt.setString(4, cliente.getTelefone());
-            stmt.setInt(4, cliente.getIdCliente());
+            stmt.setInt(5, cliente.getIdCliente());
 
             stmt.executeUpdate();
+            System.out.println("Cliente atualizado!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            System.out.println("Erro ao atualizar Cliente: " + e.getMessage());
+    }
     }
 
     // ? DELETE
@@ -60,9 +62,10 @@ public class ClienteDAO {
 
             stmt.setInt(1, idCliente);
             stmt.executeUpdate();
+            System.out.println("Cliente deletado!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao deletar Cliente: " + e.getMessage());
         }
     }
 
@@ -82,7 +85,7 @@ public class ClienteDAO {
                 cliente.setNome(rs.getString("nome"));
                 cliente.setCpf(rs.getString("cpf"));
                 cliente.setEmail(rs.getString("email"));
-                cliente.setEmail(rs.getString("telefone"));
+                cliente.setTelefone(rs.getString("telefone"));
 
 
            
@@ -91,7 +94,7 @@ public class ClienteDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao listar Cliente: " + e.getMessage());
         }
 
         return cliente;
@@ -111,7 +114,7 @@ public class ClienteDAO {
                 cliente.setNome(rs.getString("nome"));
                 cliente.setCpf(rs.getString("cpf"));
                 cliente.setEmail(rs.getString("email"));
-                cliente.setEmail(rs.getString("telefone"));
+                cliente.setTelefone(rs.getString("telefone"));
 
 
 
@@ -119,7 +122,7 @@ public class ClienteDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao listar Cliente: " + e.getMessage());
         }
 
         return lista;
