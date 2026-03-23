@@ -1,8 +1,6 @@
 package dao;
 
 import classes.Cliente;
-import classes.Financeiro;
-import classes.Taxi;
 import conexao.Conexao;
 
 import java.sql.*;
@@ -17,15 +15,16 @@ public class ClienteDAO {
     // ? INSERT
 
     public void inserir(Cliente cliente) {
-        String sql = "INSERT INTO Cliente (nome, cpf, email, idTaxi, idFinanceiro) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Cliente (nome, cpf, email, telefone) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getEmail());
-            stmt.setInt(4, cliente.getTaxi().getIdTaxi());
-            stmt.setInt(5, cliente.getFinanceiro().getIdFinanceiro());
+            stmt.setString(4, cliente.getTelefone());
+            
+           
 
             stmt.executeUpdate();
 
@@ -36,16 +35,15 @@ public class ClienteDAO {
 
     // ? UPDATE
     public void atualizar(Cliente cliente) {
-        String sql = "UPDATE Cliente SET nome=?, cpf=?, email=?, idTaxi=?, idFinanceiro=? WHERE idCliente=?";
+        String sql = "UPDATE Cliente SET nome=?, cpf=?, email=?, telefone=? WHERE idCliente=?";
 
-        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getEmail());
-            stmt.setInt(4, cliente.getTaxi().getIdTaxi());
-            stmt.setInt(5, cliente.getFinanceiro().getIdFinanceiro());
-            stmt.setInt(6, cliente.getIdCliente());
+            stmt.setString(4, cliente.getTelefone());
+            stmt.setInt(4, cliente.getIdCliente());
 
             stmt.executeUpdate();
 
@@ -58,7 +56,7 @@ public class ClienteDAO {
     public void deletar(int idCliente) {
         String sql = "DELETE FROM Cliente WHERE idCliente=?";
 
-        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idCliente);
             stmt.executeUpdate();
@@ -73,7 +71,7 @@ public class ClienteDAO {
         String sql = "SELECT * FROM Cliente WHERE idCliente=?";
         Cliente cliente = null;
 
-        try (Connection conn = Conexao.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -84,14 +82,12 @@ public class ClienteDAO {
                 cliente.setNome(rs.getString("nome"));
                 cliente.setCpf(rs.getString("cpf"));
                 cliente.setEmail(rs.getString("email"));
+                cliente.setEmail(rs.getString("telefone"));
 
-                Taxi taxi = new Taxi();
-                taxi.setIdTaxi(rs.getInt("idTaxi"));
-                cliente.setTaxi(taxi);
 
-                Financeiro financeiro = new Financeiro();
-                financeiro.setIdFinanceiro(rs.getInt("idFinanceiro"));
-                cliente.setFinanceiro(financeiro);
+           
+
+              
             }
 
         } catch (SQLException e) {
@@ -106,7 +102,7 @@ public class ClienteDAO {
         String sql = "SELECT * FROM Cliente";
         List<Cliente> lista = new ArrayList<>();
 
-        try (Connection conn = Conexao.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection conn = Conexao.conectar(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();
@@ -115,14 +111,9 @@ public class ClienteDAO {
                 cliente.setNome(rs.getString("nome"));
                 cliente.setCpf(rs.getString("cpf"));
                 cliente.setEmail(rs.getString("email"));
+                cliente.setEmail(rs.getString("telefone"));
 
-                Taxi taxi = new Taxi();
-                taxi.setIdTaxi(rs.getInt("idTaxi"));
-                cliente.setTaxi(taxi);
 
-                Financeiro financeiro = new Financeiro();
-                financeiro.setIdFinanceiro(rs.getInt("idFinanceiro"));
-                cliente.setFinanceiro(financeiro);
 
                 lista.add(cliente);
             }

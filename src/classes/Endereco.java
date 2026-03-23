@@ -12,7 +12,6 @@ public class Endereco {
     private String cep;
     private String cidade;
     private String estado;
-
     private Cliente cliente;
 
     public Endereco() {
@@ -74,4 +73,6 @@ public class Endereco {
         this.cliente = cliente;
     }
 
+
+    
 }

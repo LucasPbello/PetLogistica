@@ -10,16 +10,18 @@ import java.sql.SQLException;
  */
 public class Conexao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/PetLogistica";
+    private static final String URL = "jdbc:mysql://localhost:3306/petlogistica";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection conectar() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("Driver não encontrado", e);
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Conectado com sucesso!");
+            return conn;
+        } catch (SQLException e) {
+            System.out.println("Erro ao conectar: " + e.getMessage());
+            return null;
         }
     }
 }

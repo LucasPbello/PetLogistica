@@ -14,11 +14,14 @@ public class Cliente {
     private String email;
     private String telefone;
 
-    private Taxi taxi;
-    private Financeiro financeiro;
+    public Cliente(int idCliente, String nome, String cpf, String email, String telefone) {
+        this.idCliente = idCliente;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.telefone = telefone;
+    }
 
-    private List<Animal> animais;
-    private List<Endereco> enderecos;
     
 
     public Cliente() {
@@ -64,37 +67,6 @@ public class Cliente {
         this.email = email;
     }
 
-    public Taxi getTaxi() {
-        return taxi;
-    }
-
-    public void setTaxi(Taxi taxi) {
-        this.taxi = taxi;
-    }
-
-    public Financeiro getFinanceiro() {
-        return financeiro;
-    }
-
-    public void setFinanceiro(Financeiro financeiro) {
-        this.financeiro = financeiro;
-    }
-
-    public List<Animal> getAnimais() {
-        return animais;
-    }
-
-    public void setAnimais(List<Animal> animais) {
-        this.animais = animais;
-    }
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
 
 
 }

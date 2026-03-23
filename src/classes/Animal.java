@@ -14,18 +14,19 @@ public class Animal {
     private String nome;
     private String raca;
     private String cor;
-    private BigDecimal peso;
-    private BigDecimal tamanho;
+    private double peso;
+    private double tamanho;
     private String caixaTransporte;
     private Date dataNascimento;
+    private String microchip;
     
+    private byte[] carteirinha;
     private byte[] documentos;
     private byte[] imagens;
 
     private Cliente cliente;
     private OrigemDestino origemDestino;
 
-    private List<Vacinas> vacinas;
 
     public Animal() {}
 
@@ -61,19 +62,19 @@ public class Animal {
         this.cor = cor;
     }
 
-    public BigDecimal getPeso() {
+    public double getPeso() {
         return peso;
     }
 
-    public void setPeso(BigDecimal peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 
-    public BigDecimal getTamanho() {
+    public double getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(BigDecimal tamanho) {
+    public void setTamanho(double tamanho) {
         this.tamanho = tamanho;
     }
 
@@ -91,6 +92,22 @@ public class Animal {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getMicrochip() {
+        return microchip;
+    }
+
+    public void setMicrochip(String microchip) {
+        this.microchip = microchip;
+    }
+
+    public byte[] getCarteirinha() {
+        return carteirinha;
+    }
+
+    public void setCarteirinha(byte[] carteirinha) {
+        this.carteirinha = carteirinha;
     }
 
     public byte[] getDocumentos() {
@@ -125,14 +142,7 @@ public class Animal {
         this.origemDestino = origemDestino;
     }
 
-    public List<Vacinas> getVacinas() {
-        return vacinas;
-    }
-
-    public void setVacinas(List<Vacinas> vacinas) {
-        this.vacinas = vacinas;
-    }
-
     
-    
+
+
 }

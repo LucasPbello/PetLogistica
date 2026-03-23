@@ -9,6 +9,7 @@ public class Taxi {
     private int idTaxi;
     private String enderecoOrigem;
     private String enderecoDestino;
+    private Cliente cliente;
 
     public Taxi() {
     }
@@ -37,4 +38,13 @@ public class Taxi {
         this.enderecoDestino = enderecoDestino;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+   
 }
