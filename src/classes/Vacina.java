@@ -1,6 +1,6 @@
 package classes;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -11,12 +11,17 @@ public class Vacina {
     private int idVacina;
     private String vacinaNome;
     private String vacinaMarca;
-    private Date vacinaAplicacao;
-    private Date vacinaValidade;
+    private LocalDate vacinaAplicacao;
+    private LocalDate vacinaValidade;
     private Animal animal;
 
-
     public Vacina() {
+    }
+
+    public void validar() {
+        if (vacinaAplicacao != null && vacinaValidade == null) {
+            throw new IllegalArgumentException("Se a data de aplicação for informada, a validade também é obrigatória.");
+        }
     }
 
     public int getIdVacina() {
@@ -26,7 +31,6 @@ public class Vacina {
     public void setIdVacina(int idVacina) {
         this.idVacina = idVacina;
     }
-
 
     public String getVacinaNome() {
         return vacinaNome;
@@ -44,19 +48,19 @@ public class Vacina {
         this.vacinaMarca = vacinaMarca;
     }
 
-    public Date getVacinaAplicacao() {
+    public LocalDate getVacinaAplicacao() {
         return vacinaAplicacao;
     }
 
-    public void setVacinaAplicacao(Date vacinaAplicacao) {
+    public void setVacinaAplicacao(LocalDate vacinaAplicacao) {
         this.vacinaAplicacao = vacinaAplicacao;
     }
 
-    public Date getVacinaValidade() {
+    public LocalDate getVacinaValidade() {
         return vacinaValidade;
     }
 
-    public void setVacinaValidade(Date vacinaValidade) {
+    public void setVacinaValidade(LocalDate vacinaValidade) {
         this.vacinaValidade = vacinaValidade;
     }
 
@@ -67,8 +71,5 @@ public class Vacina {
     public void setAnimal(Animal animal) {
         this.animal = animal;
     }
-
-
-
 
 }

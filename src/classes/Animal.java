@@ -1,6 +1,7 @@
 package classes;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -15,7 +16,7 @@ public class Animal {
     private double peso;
     private double tamanho;
     private String caixaTransporte;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
     private String microchip;
 
     private String carteirinha;
@@ -84,11 +85,11 @@ public class Animal {
         this.caixaTransporte = caixaTransporte;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

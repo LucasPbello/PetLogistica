@@ -29,7 +29,7 @@ public class AnimalDAO {
             stmt.setDouble(4, animal.getPeso());
             stmt.setDouble(5, animal.getTamanho());
             stmt.setString(6, animal.getCaixaTransporte());
-            stmt.setDate(7, animal.getDataNascimento());
+            stmt.setDate(7, Date.valueOf(animal.getDataNascimento()));
             stmt.setString(8, animal.getMicrochip());
 
             stmt.setString(9, animal.getCarteirinha());
@@ -64,7 +64,7 @@ public class AnimalDAO {
                 a.setPeso(rs.getDouble("peso"));
                 a.setTamanho(rs.getDouble("tamanho"));
                 a.setCaixaTransporte(rs.getString("caixaTransporte"));
-                a.setDataNascimento(rs.getDate("dataNascimento"));
+                a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
                 a.setMicrochip(rs.getString("microchip"));
 
                 a.setCarteirinha(rs.getString("carteirinha"));
@@ -110,7 +110,7 @@ public class AnimalDAO {
                 a.setPeso(rs.getDouble("peso"));
                 a.setTamanho(rs.getDouble("tamanho"));
                 a.setCaixaTransporte(rs.getString("caixaTransporte"));
-                a.setDataNascimento(rs.getDate("dataNascimento"));
+                a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
                 a.setMicrochip(rs.getString("microchip"));
 
                 a.setCarteirinha(rs.getString("carteirinha"));
@@ -147,7 +147,7 @@ public class AnimalDAO {
             stmt.setDouble(4, animal.getPeso());
             stmt.setDouble(5, animal.getTamanho());
             stmt.setString(6, animal.getCaixaTransporte());
-            stmt.setDate(7, animal.getDataNascimento());
+            stmt.setDate(7, Date.valueOf(animal.getDataNascimento()));
             stmt.setString(8, animal.getMicrochip());
 
             stmt.setString(9, animal.getCarteirinha());
