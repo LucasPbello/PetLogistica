@@ -24,4 +24,15 @@ public class Conexao {
             return null;
         }
     }
+
+    public static void desconectar(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("Desconectado com sucesso!");
+            } catch (SQLException e) {
+                System.out.println("Erro ao desconectar: " + e.getMessage());
+            }
+        }
+    }
 }

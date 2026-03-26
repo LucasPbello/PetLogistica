@@ -41,6 +41,7 @@ public class TelaClasses extends javax.swing.JFrame {
 
     }
 
+    public TelaClasses(){}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,8 +194,9 @@ public class TelaClasses extends javax.swing.JFrame {
         jMenu1.setOpaque(true);
 
         mniVoltar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        mniVoltar.setBackground(new java.awt.Color(51, 255, 51));
+        mniVoltar.setBackground(new java.awt.Color(153, 153, 255));
         mniVoltar.setText("Voltar");
+        mniVoltar.setOpaque(true);
         mniVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniVoltarActionPerformed(evt);
@@ -205,6 +207,7 @@ public class TelaClasses extends javax.swing.JFrame {
         mniSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mniSair.setBackground(new java.awt.Color(255, 51, 51));
         mniSair.setText("Sair");
+        mniSair.setOpaque(true);
         mniSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniSairActionPerformed(evt);
@@ -232,7 +235,9 @@ public class TelaClasses extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnimalActionPerformed
-        // TODO add your handling code here:
+        TelaAnimal fre = new TelaAnimal();
+        //Mostrando o form quando clicar no botão
+        fre.setVisible(true);
     }//GEN-LAST:event_btnAnimalActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed

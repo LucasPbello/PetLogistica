@@ -15,13 +15,13 @@ public class Animal {
     private String cor;
     private double peso;
     private double tamanho;
-    private String caixaTransporte;
+    private int caixaTransporte;
     private LocalDate dataNascimento;
     private String microchip;
 
-    private String carteirinha;
-    private String documentos;
-    private String imagens;
+    private byte[] carteirinha;
+    private byte[] documentos;
+    private byte[] imagens;
 
     private Cliente cliente;
     private OrigemDestino origemDestino;
@@ -77,11 +77,11 @@ public class Animal {
         this.tamanho = tamanho;
     }
 
-    public String getCaixaTransporte() {
+    public int getCaixaTransporte() {
         return caixaTransporte;
     }
 
-    public void setCaixaTransporte(String caixaTransporte) {
+    public void setCaixaTransporte(int caixaTransporte) {
         this.caixaTransporte = caixaTransporte;
     }
 
@@ -101,27 +101,27 @@ public class Animal {
         this.microchip = microchip;
     }
 
-    public String getCarteirinha() {
+    public byte[] getCarteirinha() {
         return carteirinha;
     }
 
-    public void setCarteirinha(String carteirinha) {
+    public void setCarteirinha(byte[] carteirinha) {
         this.carteirinha = carteirinha;
     }
 
-    public String getDocumentos() {
+    public byte[] getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(String documentos) {
+    public void setDocumentos(byte[] documentos) {
         this.documentos = documentos;
     }
 
-    public String getImagens() {
+    public byte[] getImagens() {
         return imagens;
     }
 
-    public void setImagens(String imagens) {
+    public void setImagens(byte[] imagens) {
         this.imagens = imagens;
     }
 

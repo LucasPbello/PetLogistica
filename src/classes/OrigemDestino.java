@@ -64,4 +64,8 @@ public class OrigemDestino {
         this.companhiaAerea = companhiaAerea;
     }
 
+    @Override
+    public String toString() {
+        return paisOrigem + " ? " + paisDestino;
+    }
 }

@@ -28,13 +28,13 @@ public class AnimalDAO {
             stmt.setString(3, animal.getCor());
             stmt.setDouble(4, animal.getPeso());
             stmt.setDouble(5, animal.getTamanho());
-            stmt.setString(6, animal.getCaixaTransporte());
+            stmt.setInt(6, animal.getCaixaTransporte());
             stmt.setDate(7, Date.valueOf(animal.getDataNascimento()));
             stmt.setString(8, animal.getMicrochip());
 
-            stmt.setString(9, animal.getCarteirinha());
-            stmt.setString(10, animal.getDocumentos());
-            stmt.setString(11, animal.getImagens());
+            stmt.setBytes(9, animal.getCarteirinha());
+            stmt.setBytes(10, animal.getDocumentos());
+            stmt.setBytes(11, animal.getImagens());
 
             stmt.setInt(12, animal.getCliente().getIdCliente());
             stmt.setInt(13, animal.getOrigemDestino().getIdOrigemDestino());
@@ -63,13 +63,13 @@ public class AnimalDAO {
                 a.setCor(rs.getString("cor"));
                 a.setPeso(rs.getDouble("peso"));
                 a.setTamanho(rs.getDouble("tamanho"));
-                a.setCaixaTransporte(rs.getString("caixaTransporte"));
+                a.setCaixaTransporte(rs.getInt("caixaTransporte"));
                 a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
                 a.setMicrochip(rs.getString("microchip"));
 
-                a.setCarteirinha(rs.getString("carteirinha"));
-                a.setDocumentos(rs.getString("documentos"));
-                a.setImagens(rs.getString("imagens"));
+                a.setCarteirinha(rs.getBytes("carteirinha"));
+                a.setDocumentos(rs.getBytes("documentos"));
+                a.setImagens(rs.getBytes("imagens"));
 
                 // Relacionamentos (somente ID)
                 Cliente c = new Cliente();
@@ -109,13 +109,13 @@ public class AnimalDAO {
                 a.setCor(rs.getString("cor"));
                 a.setPeso(rs.getDouble("peso"));
                 a.setTamanho(rs.getDouble("tamanho"));
-                a.setCaixaTransporte(rs.getString("caixaTransporte"));
+                a.setCaixaTransporte(rs.getInt("caixaTransporte"));
                 a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
                 a.setMicrochip(rs.getString("microchip"));
 
-                a.setCarteirinha(rs.getString("carteirinha"));
-                a.setDocumentos(rs.getString("documentos"));
-                a.setImagens(rs.getString("imagens"));
+                a.setCarteirinha(rs.getBytes("carteirinha"));
+                a.setDocumentos(rs.getBytes("documentos"));
+                a.setImagens(rs.getBytes("imagens"));
 
                 Cliente c = new Cliente();
                 c.setIdCliente(rs.getInt("idCliente"));
@@ -146,13 +146,13 @@ public class AnimalDAO {
             stmt.setString(3, animal.getCor());
             stmt.setDouble(4, animal.getPeso());
             stmt.setDouble(5, animal.getTamanho());
-            stmt.setString(6, animal.getCaixaTransporte());
+            stmt.setInt(6, animal.getCaixaTransporte());
             stmt.setDate(7, Date.valueOf(animal.getDataNascimento()));
             stmt.setString(8, animal.getMicrochip());
 
-            stmt.setString(9, animal.getCarteirinha());
-            stmt.setString(10, animal.getDocumentos());
-            stmt.setString(11, animal.getImagens());
+            stmt.setBytes(9, animal.getCarteirinha());
+            stmt.setBytes(10, animal.getDocumentos());
+            stmt.setBytes(11, animal.getImagens());
 
             stmt.setInt(12, animal.getCliente().getIdCliente());
             stmt.setInt(13, animal.getOrigemDestino().getIdOrigemDestino());
