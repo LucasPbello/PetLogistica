@@ -7,7 +7,7 @@ public class Usuario {
    
     private String login;
     private String senha;
-    private String tipo; // 1=admin, 2=operador, 3=usuario
+    private String tipo; 
 
     public Usuario(String login, String senha, String tipo) {
         

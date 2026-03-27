@@ -7,8 +7,8 @@ package classes;
 public class Taxi {
 
     private int idTaxi;
-    private String enderecoOrigem;
-    private String enderecoDestino;
+    private String enderecoColeta;
+    private String enderecoEntrega;
     private Cliente cliente;
 
     public Taxi() {
@@ -22,20 +22,20 @@ public class Taxi {
         this.idTaxi = idTaxi;
     }
 
-    public String getEnderecoOrigem() {
-        return enderecoOrigem;
+    public String getEnderecoColeta() {
+        return enderecoColeta;
     }
 
-    public void setEnderecoOrigem(String enderecoOrigem) {
-        this.enderecoOrigem = enderecoOrigem;
+    public void setEnderecoColeta(String enderecoColeta) {
+        this.enderecoColeta = enderecoColeta;
     }
 
-    public String getEnderecoDestino() {
-        return enderecoDestino;
+    public String getEnderecoEntrega() {
+        return enderecoEntrega;
     }
 
-    public void setEnderecoDestino(String enderecoDestino) {
-        this.enderecoDestino = enderecoDestino;
+    public void setEnderecoEntrega(String enderecoEntrega) {
+        this.enderecoEntrega = enderecoEntrega;
     }
 
     public Cliente getCliente() {

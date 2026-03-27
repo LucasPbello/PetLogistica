@@ -17,8 +17,6 @@ public class TelaClasses extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaClasses.class.getName());
 
-    
-
     private void aplicarPermissoes() {
 
         btnAnimal.setEnabled(permissao.podeAnimal());
@@ -32,16 +30,18 @@ public class TelaClasses extends javax.swing.JFrame {
 
     public TelaClasses(Usuario usuario) {
         initComponents();
- 
+
         this.usuario = usuario;
         dao = new UsuarioDAO();
         permissao = PermissaoUsuarios.getPermissao(usuario.getTipo());
-        
+
         aplicarPermissoes();
 
     }
 
-    public TelaClasses(){}
+    public TelaClasses() {
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +60,7 @@ public class TelaClasses extends javax.swing.JFrame {
         btnOrigem = new javax.swing.JButton();
         btnTaxi = new javax.swing.JButton();
         btnVacina = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mniVoltar = new javax.swing.JMenuItem();
@@ -145,13 +146,27 @@ public class TelaClasses extends javax.swing.JFrame {
             }
         });
 
+        btnVoltar.setBackground(new java.awt.Color(255, 255, 0));
+        btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVoltar.setText("VOLTAR");
+        btnVoltar.setToolTipText("Voltar até a tela de login");
+        btnVoltar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(68, 68, 68))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnAnimal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -160,42 +175,42 @@ public class TelaClasses extends javax.swing.JFrame {
                             .addComponent(btnOrigem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnFinanceiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTaxi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(83, 83, 83))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(68, 68, 68))))
+                            .addComponent(btnTaxi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(83, 83, 83))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
+                .addGap(40, 40, 40)
                 .addComponent(btnAnimal)
-                .addGap(39, 39, 39)
+                .addGap(40, 40, 40)
                 .addComponent(btnVacina)
-                .addGap(39, 39, 39)
+                .addGap(40, 40, 40)
                 .addComponent(btnCliente)
-                .addGap(41, 41, 41)
+                .addGap(40, 40, 40)
                 .addComponent(btnEndereco)
-                .addGap(37, 37, 37)
+                .addGap(40, 40, 40)
                 .addComponent(btnFinanceiro)
-                .addGap(42, 42, 42)
+                .addGap(40, 40, 40)
                 .addComponent(btnOrigem)
-                .addGap(41, 41, 41)
+                .addGap(40, 40, 40)
                 .addComponent(btnTaxi)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(btnVoltar))
         );
 
-        jMenu1.setBackground(new java.awt.Color(0, 51, 153));
-        jMenu1.setText("Menu");
-        jMenu1.setToolTipText("Menu para voltar ou sair");
+        jMenu1.setBackground(new java.awt.Color(51, 51, 255));
+        jMenu1.setText("MENU");
+        jMenu1.setToolTipText("Menu de atalhos");
         jMenu1.setOpaque(true);
 
         mniVoltar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mniVoltar.setBackground(new java.awt.Color(153, 153, 255));
         mniVoltar.setText("Voltar");
+        mniVoltar.setToolTipText("Voltar para tela de login");
         mniVoltar.setOpaque(true);
         mniVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,6 +222,7 @@ public class TelaClasses extends javax.swing.JFrame {
         mniSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mniSair.setBackground(new java.awt.Color(255, 51, 51));
         mniSair.setText("Sair");
+        mniSair.setToolTipText("Fechar a janela");
         mniSair.setOpaque(true);
         mniSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -270,10 +286,16 @@ public class TelaClasses extends javax.swing.JFrame {
 
     private void mniVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVoltarActionPerformed
         Login fre = new Login();
-        //Mostrando o form quando clicar no botão
+
         fre.setVisible(true);
 
     }//GEN-LAST:event_mniVoltarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        Login fre = new Login();
+
+        fre.setVisible(true);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,6 +334,7 @@ public class TelaClasses extends javax.swing.JFrame {
     private javax.swing.JButton btnOrigem;
     private javax.swing.JButton btnTaxi;
     private javax.swing.JButton btnVacina;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;

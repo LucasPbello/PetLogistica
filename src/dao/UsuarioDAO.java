@@ -9,7 +9,7 @@ public class UsuarioDAO {
 
     public UsuarioDAO() {
         try {
-            // Ajuste o host, usuário e senha do seu MySQL
+            
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/petlogistica", "root", "root"
             );

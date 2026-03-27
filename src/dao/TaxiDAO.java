@@ -14,12 +14,12 @@ import java.util.List;
 public class TaxiDAO {
 
     public void inserir(Taxi t) {
-        String sql = "INSERT INTO Taxi (EnderecoOrigem, EnderecoDestino, idCliente) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Taxi (EnderecoColeta, EnderecoEntrega, idCliente) VALUES (?, ?, ?)";
 
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, t.getEnderecoOrigem());
-            stmt.setString(2, t.getEnderecoDestino());
+            stmt.setString(1, t.getEnderecoColeta());
+            stmt.setString(2, t.getEnderecoEntrega());
             stmt.setInt(3, t.getCliente().getIdCliente());
             stmt.executeUpdate();
             System.out.println("Taxi inserido!");
@@ -38,8 +38,8 @@ public class TaxiDAO {
             while (rs.next()) {
                 Taxi t = new Taxi();
                 t.setIdTaxi(rs.getInt("idTaxi"));
-                t.setEnderecoOrigem(rs.getString("EnderecoOrigem"));
-                t.setEnderecoDestino(rs.getString("EnderecoDestino"));
+                t.setEnderecoColeta(rs.getString("EnderecoColeta"));
+                t.setEnderecoEntrega(rs.getString("EnderecoEntrega"));
 
                 // ? CRIAR OBJETO CLIENTE
                 Cliente c = new Cliente();
@@ -58,12 +58,12 @@ public class TaxiDAO {
     }
 
     public void atualizar(Taxi t) {
-        String sql = "UPDATE Taxi SET EnderecoOrigem=?, EnderecoDestino=?, idCliente=? WHERE idTaxi=?";
+        String sql = "UPDATE Taxi SET EnderecoColeta=?, EnderecoEntrega=?, idCliente=? WHERE idTaxi=?";
 
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, t.getEnderecoOrigem());
-            stmt.setString(2, t.getEnderecoDestino());
+            stmt.setString(1, t.getEnderecoColeta());
+            stmt.setString(2, t.getEnderecoEntrega());
             stmt.setInt(3, t.getCliente().getIdCliente());
             stmt.setInt(4, t.getIdTaxi());
             stmt.executeUpdate();

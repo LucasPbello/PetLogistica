@@ -131,20 +131,32 @@ public class Login extends javax.swing.JFrame {
         String login = txtLogin.getText();
         String senha = txtSenha.getText();
 
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        Usuario usuario = usuarioDAO.validarLogin(login, senha);
+        // LOGIN FIXO (GERENTE)
+        if (login.equals("gerente") && senha.equals("123")) {
 
-        if (usuario != null) {
-            Sessao.setUsuario(usuario);
-            TelaClasses tela = new TelaClasses(usuario);
-            tela.setVisible(true);
+            Usuario gerente = new Usuario(login, senha, "Gerente");
+
+            Sessao.setUsuario(gerente);
+
+            new TelaClasses(gerente).setVisible(true);
             this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Login ou senha incorretos!");
-        }
 
-        usuarioDAO.desconectar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Login inválido!");
+        }
     
+    //UsuarioDAO usuarioDAO = new UsuarioDAO();
+    //Usuario usuario = usuarioDAO.validarLogin(login, senha);
+
+    //if (usuario != null) {
+    // Sessao.setUsuario(usuario);
+    // TelaClasses tela = new TelaClasses(usuario);
+    //tela.setVisible(true);
+    // this.dispose();
+    // } else {
+    //  JOptionPane.showMessageDialog(this, "Login ou senha incorretos!");
+    // }
+    // usuarioDAO.desconectar();
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
