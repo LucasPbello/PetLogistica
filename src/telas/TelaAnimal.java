@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package telas;
 
 import java.io.File;
@@ -276,11 +272,9 @@ public class TelaAnimal extends javax.swing.JFrame {
         lblOrigem.setOpaque(true);
 
         cmbOrigem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbOrigem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbOrigem.setToolTipText("Buscar a origem e destino do pet");
 
         cmbCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbCliente.setToolTipText("Buscar cliente associado a pet");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -573,14 +567,35 @@ public class TelaAnimal extends javax.swing.JFrame {
         try {
             AnimalDAO dao = new AnimalDAO();
 
+            //  VALIDAÇÃO GERAL (ANTES DE TUDO)
+            if (txtNome.getText().isEmpty()
+                    || txtRaca.getText().isEmpty()
+                    || txtCor.getText().isEmpty()
+                    || txtPeso.getText().isEmpty()
+                    || txtMicrochip.getText().isEmpty()
+                    || txtData.getText().isEmpty()
+                    || cmbCliente.getSelectedIndex() == -1
+                    || cmbOrigem.getSelectedIndex() == -1) {
+
+                JOptionPane.showMessageDialog(null, "Preencha TODOS os campos!");
+                return;
+            }
+
+            //  SET BÁSICO
             animal.setNome(txtNome.getText());
             animal.setRaca(txtRaca.getText());
             animal.setCor(txtCor.getText());
-            animal.setPeso(Double.parseDouble(txtPeso.getText()));
-            if (txtPeso.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Preencha o peso!");
+            animal.setMicrochip(txtMicrochip.getText());
+
+            //  PESO (CORRIGIDO)
+            try {
+                animal.setPeso(Double.parseDouble(txtPeso.getText()));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Peso inválido!");
                 return;
             }
+
+            //  TAMANHO
             String tamanho = cmbTamanho.getSelectedItem().toString();
 
             switch (tamanho) {
@@ -594,20 +609,15 @@ public class TelaAnimal extends javax.swing.JFrame {
                     animal.setTamanho(3);
                     break;
             }
-            String caixa = cmbCaixa.getSelectedItem().toString();
 
+            //  CAIXA
+            String caixa = cmbCaixa.getSelectedItem().toString();
             int numeroCaixa = Integer.parseInt(caixa.replace("Caixa ", ""));
             animal.setCaixaTransporte(numeroCaixa);
 
-            animal.setMicrochip(txtMicrochip.getText());
-
+            //  DATA (COM RETURN NO ERRO)
             try {
                 String dataTexto = txtData.getText();
-
-                if (dataTexto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Preencha a data!");
-                    return;
-                }
 
                 java.time.format.DateTimeFormatter formatter
                         = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -619,23 +629,21 @@ public class TelaAnimal extends javax.swing.JFrame {
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Data inválida! Use dd/MM/yyyy");
+                return; 
             }
-            
-            if (cmbCliente.getSelectedIndex() == -1 || cmbOrigem.getSelectedIndex() == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione Cliente e Origem!");
-                return;
-            }
-            //  PEGAR CLIENTE
+
+            // ? CLIENTE
             int indexCliente = cmbCliente.getSelectedIndex();
             Cliente clienteSelecionado = listaClientes.get(indexCliente);
 
-            //  PEGAR ORIGEM DESTINO
+            // ? ORIGEM DESTINO
             int indexOD = cmbOrigem.getSelectedIndex();
             OrigemDestino odSelecionado = listaOrigem.get(indexOD);
 
-            //  SETAR NO ANIMAL
             animal.setCliente(clienteSelecionado);
             animal.setOrigemDestino(odSelecionado);
+
+            // ? SALVAR
             dao.inserir(animal);
 
             JOptionPane.showMessageDialog(null, "Animal salvo com sucesso!");

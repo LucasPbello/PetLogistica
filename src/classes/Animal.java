@@ -125,7 +125,6 @@ public class Animal {
         this.imagens = imagens;
     }
 
-
     public Cliente getCliente() {
         return cliente;
     }
@@ -142,4 +141,8 @@ public class Animal {
         this.origemDestino = origemDestino;
     }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

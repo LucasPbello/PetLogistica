@@ -257,27 +257,39 @@ public class TelaClasses extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnimalActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        // TODO add your handling code here:
+        TelaCliente fre = new TelaCliente();
+        //Mostrando o form quando clicar no botão
+        fre.setVisible(true);
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnderecoActionPerformed
-        // TODO add your handling code here:
+        TelaEndereco fre = new TelaEndereco();
+
+        fre.setVisible(true);
     }//GEN-LAST:event_btnEnderecoActionPerformed
 
     private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
-        // TODO add your handling code here:
+        TelaFinanceiro fre = new TelaFinanceiro();
+
+        fre.setVisible(true);
     }//GEN-LAST:event_btnFinanceiroActionPerformed
 
     private void btnOrigemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrigemActionPerformed
-        // TODO add your handling code here:
+        TelaOrigemDestino fre = new TelaOrigemDestino();
+
+        fre.setVisible(true);
     }//GEN-LAST:event_btnOrigemActionPerformed
 
     private void btnTaxiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaxiActionPerformed
-        // TODO add your handling code here:
+        TelaTaxi fre = new TelaTaxi();
+
+        fre.setVisible(true);
     }//GEN-LAST:event_btnTaxiActionPerformed
 
     private void btnVacinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVacinaActionPerformed
-        // TODO add your handling code here:
+        TelaVacina fre = new TelaVacina();
+
+        fre.setVisible(true);
     }//GEN-LAST:event_btnVacinaActionPerformed
 
     private void mniSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSairActionPerformed

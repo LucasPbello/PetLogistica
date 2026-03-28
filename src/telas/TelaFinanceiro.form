@@ -52,7 +52,7 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -238,11 +238,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Digitar valor total que ser&#xe1; pago pelo cliente"/>
-            <Property name="toolTipText" type="java.lang.String" value="Nome do pet"/>
+            <Property name="toolTipText" type="java.lang.String" value="Digitar valor total que ser&#xe1; pago pelo cliente"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtClienteTotalActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtClienteTotalKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblClienteSinal">
@@ -277,11 +276,15 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtLucro">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Digitar lucro obtido com o proceso"/>
+            <Property name="toolTipText" type="java.lang.String" value="Lucro obtido com o proceso"/>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLucroActionPerformed"/>
           </Events>
@@ -371,7 +374,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Digitar valor pago aos funcion&#xe1;rios"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFuncionariosActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtFuncionariosKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblGasto">
@@ -392,7 +395,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Digitar valor gasto com o processo"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGastoActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtGastoKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCliente">
@@ -411,12 +414,7 @@
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Buscar nome do cliente desse processo"/>
           </Properties>
