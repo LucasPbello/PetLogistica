@@ -147,7 +147,7 @@ public class TelaClasses extends javax.swing.JFrame {
         });
 
         btnVoltar.setBackground(new java.awt.Color(255, 255, 0));
-        btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnVoltar.setText("VOLTAR");
         btnVoltar.setToolTipText("Voltar até a tela de login");
         btnVoltar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -162,7 +162,7 @@ public class TelaClasses extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
+                .addContainerGap(85, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -198,8 +198,9 @@ public class TelaClasses extends javax.swing.JFrame {
                 .addComponent(btnOrigem)
                 .addGap(40, 40, 40)
                 .addComponent(btnTaxi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(btnVoltar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(btnVoltar)
+                .addGap(50, 50, 50))
         );
 
         jMenu1.setBackground(new java.awt.Color(51, 51, 255));

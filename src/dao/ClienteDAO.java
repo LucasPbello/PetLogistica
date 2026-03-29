@@ -23,8 +23,6 @@ public class ClienteDAO {
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getEmail());
             stmt.setString(4, cliente.getTelefone());
-            
-           
 
             stmt.executeUpdate();
             System.out.println("Cliente inserido!");
@@ -51,7 +49,7 @@ public class ClienteDAO {
 
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar Cliente: " + e.getMessage());
-    }
+        }
     }
 
     // ? DELETE
@@ -87,10 +85,6 @@ public class ClienteDAO {
                 cliente.setEmail(rs.getString("email"));
                 cliente.setTelefone(rs.getString("telefone"));
 
-
-           
-
-              
             }
 
         } catch (SQLException e) {
@@ -116,8 +110,6 @@ public class ClienteDAO {
                 cliente.setEmail(rs.getString("email"));
                 cliente.setTelefone(rs.getString("telefone"));
 
-
-
                 lista.add(cliente);
             }
 
@@ -127,5 +119,34 @@ public class ClienteDAO {
 
         return lista;
     }
-}
 
+    public List<Cliente> pesquisarPorNome(String nome) {
+        List<Cliente> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM Cliente WHERE nome LIKE ?";
+
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + nome + "%");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente c = new Cliente();
+
+                c.setIdCliente(rs.getInt("idCliente"));
+                c.setNome(rs.getString("nome"));
+                c.setCpf(rs.getString("cpf"));
+                c.setEmail(rs.getString("email"));
+                c.setTelefone(rs.getString("telefone"));
+
+                lista.add(c);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro na pesquisa: " + e.getMessage());
+        }
+
+        return lista;
+    }
+}
