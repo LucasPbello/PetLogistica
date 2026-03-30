@@ -1,16 +1,18 @@
 package telas;
 
 import classes.Cliente;
+import classes.Endereco;
 import dao.ClienteDAO;
+import dao.EnderecoDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ListaCliente extends javax.swing.JFrame {
+public class ListaEndereco extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaCliente.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaEndereco.class.getName());
 
-    public ListaCliente() {
+    public ListaEndereco() {
         initComponents();
         carregarTabela();
     }
@@ -22,7 +24,7 @@ public class ListaCliente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         scrlLista = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
+        tblEndereco = new javax.swing.JTable();
         lblPesquisar = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txtPesquisar = new javax.swing.JTextField();
@@ -35,34 +37,33 @@ public class ListaCliente extends javax.swing.JFrame {
         mniVoltar = new javax.swing.JMenuItem();
         mniSair = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("PETCARGO");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setBackground(new java.awt.Color(51, 51, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Lista de clientes");
+        jLabel1.setText("Lista de endereços");
         jLabel1.setOpaque(true);
 
-        tblClientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tblEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblEndereco.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nome", "CPF", "Email", "Telefone"
+                "ID", "Rua", "Número", "Bairro", "CEP", "Cidade", "Estado", "Cliente"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        scrlLista.setViewportView(tblClientes);
+        scrlLista.setViewportView(tblEndereco);
 
         lblPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblPesquisar.setText("Pesquisar cliente por nome:");
@@ -77,7 +78,7 @@ public class ListaCliente extends javax.swing.JFrame {
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnVoltar.setText("VOLTAR");
-        btnVoltar.setToolTipText("Voltar para a tela de clientes");
+        btnVoltar.setToolTipText("Voltar para a tela de endereços");
         btnVoltar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +89,7 @@ public class ListaCliente extends javax.swing.JFrame {
         btnPesquisar.setBackground(new java.awt.Color(255, 255, 0));
         btnPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPesquisar.setText("PESQUISAR");
-        btnPesquisar.setToolTipText("Botão para pesquisar cliente");
+        btnPesquisar.setToolTipText("Botão para pesquisar endereços através do nome do cliente");
         btnPesquisar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,7 +100,7 @@ public class ListaCliente extends javax.swing.JFrame {
         btnExcluir.setBackground(new java.awt.Color(255, 51, 51));
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnExcluir.setText("EXCLUIR");
-        btnExcluir.setToolTipText("Botão para excluir dados do cliente");
+        btnExcluir.setToolTipText("Botão para excluir dados de endereço do cliente");
         btnExcluir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +111,7 @@ public class ListaCliente extends javax.swing.JFrame {
         btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("ATUALIZAR");
-        btnAtualizar.setToolTipText("Botão para atualizar dados do cliente");
+        btnAtualizar.setToolTipText("Botão para atualizar dados de endereço do cliente");
         btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,27 +125,26 @@ public class ListaCliente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addComponent(scrlLista)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68)
+                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
+                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(212, 212, 212)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblPesquisar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(lblPesquisar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(275, 275, 275))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +217,7 @@ public class ListaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVoltarActionPerformed
-        TelaCliente fre = new TelaCliente();
+        TelaEndereco fre = new TelaEndereco();
 
         fre.setVisible(true);
     }//GEN-LAST:event_mniVoltarActionPerformed
@@ -227,74 +227,44 @@ public class ListaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_mniSairActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        TelaCliente fre = new TelaCliente();
+        TelaEndereco fre = new TelaEndereco();
 
         fre.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        int linha = tblClientes.getSelectedRow();
-
-        if (linha == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um cliente!");
-            return;
-        }
-
-        // Pegando dados da tabela
-        int id = (int) tblClientes.getValueAt(linha, 0);
-        String nome = (String) tblClientes.getValueAt(linha, 1);
-        String cpf = (String) tblClientes.getValueAt(linha, 2);
-        String email = (String) tblClientes.getValueAt(linha, 3);
-        String telefone = (String) tblClientes.getValueAt(linha, 4);
-
-        // Criando objeto cliente
-        Cliente c = new Cliente();
-        c.setIdCliente(id);
-        c.setNome(nome);
-        c.setCpf(cpf);
-        c.setEmail(email);
-        c.setTelefone(telefone);
-
-        // Abrir tela passando o cliente
-        TelaCliente tela = new TelaCliente();
-        tela.setCliente(c);
-        tela.setVisible(true);
-
-        this.dispose();
-
-    }//GEN-LAST:event_btnAtualizarActionPerformed
-
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             String nome = txtPesquisar.getText();
 
-            ClienteDAO dao = new ClienteDAO();
-            DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
+            EnderecoDAO dao = new EnderecoDAO();
+            DefaultTableModel modelo = (DefaultTableModel) tblEndereco.getModel();
 
-            modelo.setRowCount(0); // limpa a tabela
+            modelo.setRowCount(0);
 
-            List<Cliente> lista;
+            List<Endereco> lista;
 
             if (nome.isEmpty()) {
                 lista = dao.listar();
             } else {
-                lista = dao.pesquisarPorNome(nome);
+                lista = dao.pesquisarPorCliente(nome);
             }
 
             if (lista.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Nenhum cliente encontrado!");
+                JOptionPane.showMessageDialog(null, "Nenhum endereço encontrado!");
                 return;
             }
 
-            // Preencher tabela
-            for (Cliente c : lista) {
+            for (Endereco e : lista) {
                 modelo.addRow(new Object[]{
-                    c.getIdCliente(),
-                    c.getNome(),
-                    c.getCpf(),
-                    c.getEmail(),
-                    c.getTelefone()
+                    e.getIdEndereco(),
+                    e.getRua(),
+                    e.getNumero(),
+                    e.getBairro(),
+                    e.getCep(),
+                    e.getCidade(),
+                    e.getEstado(),
+                    e.getCliente().getNome()
                 });
             }
 
@@ -306,14 +276,14 @@ public class ListaCliente extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
-            int linha = tblClientes.getSelectedRow();
+            int linha = tblEndereco.getSelectedRow();
 
             if (linha == -1) {
                 JOptionPane.showMessageDialog(null, "Selecione um cliente!");
                 return;
             }
 
-            int idCliente = (int) tblClientes.getValueAt(linha, 0);
+            int idEndereco = (int) tblEndereco.getValueAt(linha, 0);
 
             // Confirmação
             int confirm = JOptionPane.showConfirmDialog(
@@ -328,19 +298,43 @@ public class ListaCliente extends javax.swing.JFrame {
             }
 
             // Excluir
-            ClienteDAO dao = new ClienteDAO();
-            dao.deletar(idCliente);
+            EnderecoDAO dao = new EnderecoDAO();
+            dao.deletar(idEndereco);
 
-            JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
+            JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+
+            carregarTabela();
 
             // ? Atualizar tabela
-            ((DefaultTableModel) tblClientes.getModel()).removeRow(linha);
+            ((DefaultTableModel) tblEndereco.getModel()).removeRow(linha);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        int linha = tblEndereco.getSelectedRow();
+
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um endereço!");
+            return;
+        }
+
+        // ? PEGAR APENAS O ID
+        int id = (int) tblEndereco.getValueAt(linha, 0);
+
+        // ? BUSCAR DO BANCO
+        EnderecoDAO dao = new EnderecoDAO();
+        Endereco e = dao.buscarPorId(id);
+
+        // ? ABRIR TELA COM OBJETO COMPLETO
+        TelaEndereco tela = new TelaEndereco();
+        tela.setEndereco(e);
+        tela.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,7 +358,7 @@ public class ListaCliente extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ListaCliente().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ListaEndereco().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -381,30 +375,33 @@ public class ListaCliente extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniSair;
     private javax.swing.JMenuItem mniVoltar;
     private javax.swing.JScrollPane scrlLista;
-    private javax.swing.JTable tblClientes;
+    private javax.swing.JTable tblEndereco;
     private javax.swing.JTextField txtPesquisar;
     // End of variables declaration//GEN-END:variables
 
     public void carregarTabela() {
         try {
-            ClienteDAO dao = new ClienteDAO();
+            EnderecoDAO dao = new EnderecoDAO();
 
-            DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblEndereco.getModel();
             modelo.setRowCount(0); // limpa tabela
 
-            for (Cliente c : dao.listar()) {
+            for (Endereco e : dao.listar()) {
                 modelo.addRow(new Object[]{
-                    c.getIdCliente(),
-                    c.getNome(),
-                    c.getCpf(),
-                    c.getEmail(),
-                    c.getTelefone()
+                    e.getIdEndereco(),
+                    e.getRua(),
+                    e.getNumero(),
+                    e.getBairro(),
+                    e.getCep(),
+                    e.getCidade(),
+                    e.getEstado(),
+                    e.getCliente().getNome()
                 });
             }
 
-            tblClientes.getColumnModel().getColumn(0).setMaxWidth(60);
-            
-            tblClientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+            tblEndereco.getColumnModel().getColumn(0).setMaxWidth(60);
+
+            tblEndereco.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar tabela: " + e.getMessage());

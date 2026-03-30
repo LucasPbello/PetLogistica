@@ -19,11 +19,13 @@ public class TelaEndereco extends javax.swing.JFrame {
         limparCampos();
         carregarCombos();
     }
-    
+
     private List<Cliente> listaClientes = new ArrayList<>();
-    
+
     private Endereco endereco = new Endereco();
     Usuario usuario = Sessao.getUsuario();
+    private boolean editando = false;
+    private int idAtual = 0;
 
     public void limparCampos() {
         txtRua.setText("");
@@ -59,6 +61,7 @@ public class TelaEndereco extends javax.swing.JFrame {
         txtCEP = new javax.swing.JTextField();
         lblCliente = new javax.swing.JLabel();
         cmbCliente = new javax.swing.JComboBox<>();
+        btnAtualizar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -156,6 +159,11 @@ public class TelaEndereco extends javax.swing.JFrame {
         btnLista.setText("LISTA DE ENDEREÇOS");
         btnLista.setToolTipText("Navega até a lista de endereço");
         btnLista.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListaActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -201,6 +209,17 @@ public class TelaEndereco extends javax.swing.JFrame {
 
         cmbCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbCliente.setToolTipText("Buscar nome do cliente");
+
+        btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAtualizar.setText("ATUALIZAR");
+        btnAtualizar.setToolTipText("Salvar os dados escritos");
+        btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -248,9 +267,12 @@ public class TelaEndereco extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
-                                .addComponent(btnLista)
+                                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
-                                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(267, 267, 267)
+                        .addComponent(btnLista)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -284,12 +306,14 @@ public class TelaEndereco extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCliente)
                     .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar)
-                    .addComponent(btnLista)
-                    .addComponent(btnVoltar))
+                    .addComponent(btnVoltar)
+                    .addComponent(btnAtualizar))
+                .addGap(35, 35, 35)
+                .addComponent(btnLista)
                 .addGap(50, 50, 50))
         );
 
@@ -386,18 +410,31 @@ public class TelaEndereco extends javax.swing.JFrame {
             endereco.setCidade(txtCidade.getText());
             endereco.setEstado(txtEstado.getText());
 
-            // ? CLIENTE
             int indexCliente = cmbCliente.getSelectedIndex();
             Cliente clienteSelecionado = listaClientes.get(indexCliente);
 
             endereco.setCliente(clienteSelecionado);
 
-            // ? SALVAR
-            dao.inserir(endereco);
+            if (editando) {
 
-            JOptionPane.showMessageDialog(null, "Endereco salvo com sucesso!");
+                endereco.setIdEndereco(idAtual);
+                dao.atualizar(endereco);
+
+                JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!");
+
+            } else {
+
+                dao.inserir(endereco);
+
+                JOptionPane.showMessageDialog(null, "Endereço salvo com sucesso!");
+            }
 
             limparCampos();
+
+            // RESETAR MODO
+            editando = false;
+            idAtual = 0;
+            btnSalvar.setEnabled(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + e.getMessage());
@@ -431,6 +468,47 @@ public class TelaEndereco extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            EnderecoDAO dao = new EnderecoDAO();
+
+            // VALIDAÇÃO
+            if (txtRua.getText().isEmpty()
+                    || txtNumero.getText().isEmpty()
+                    || txtBairro.getText().isEmpty()
+                    || txtCEP.getText().isEmpty()
+                    || txtCidade.getText().isEmpty()
+                    || txtEstado.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(null, "Buscar cliente na tabela para atualizar!");
+                return;
+            }
+
+            endereco.setRua(txtRua.getText());
+            endereco.setNumero(txtNumero.getText());
+            endereco.setBairro(txtBairro.getText());
+            endereco.setCep(txtCEP.getText());
+            endereco.setCidade(txtCidade.getText());
+            endereco.setEstado(txtEstado.getText());
+
+            dao.atualizar(endereco);
+
+            JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!");
+
+            limparCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaActionPerformed
+        ListaEndereco fre = new ListaEndereco();
+
+        fre.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnListaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -457,6 +535,7 @@ public class TelaEndereco extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnLista;
     private javax.swing.JButton btnSalvar;
@@ -502,6 +581,31 @@ public class TelaEndereco extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar combos: " + e.getMessage());
         }
+    }
+
+    public void setEndereco(Endereco e) {
+        this.endereco = e;
+
+        txtRua.setText(e.getRua());
+        txtNumero.setText(e.getNumero());
+        txtBairro.setText(e.getBairro());
+        txtCEP.setText(e.getCep());
+        txtCidade.setText(e.getCidade());
+        txtEstado.setText(e.getEstado());
+
+        // selecionar cliente no combo
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if (listaClientes.get(i).getIdCliente() == e.getCliente().getIdCliente()) {
+                cmbCliente.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        idAtual = e.getIdEndereco();
+        editando = true;
+
+        btnSalvar.setEnabled(false); // ? BLOQUEIA SALVAR
+
     }
 
 }
