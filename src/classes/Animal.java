@@ -1,6 +1,5 @@
 package classes;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -14,7 +13,7 @@ public class Animal {
     private String raca;
     private String cor;
     private double peso;
-    private double tamanho;
+    private int tamanho;
     private int caixaTransporte;
     private LocalDate dataNascimento;
     private String microchip;
@@ -24,7 +23,7 @@ public class Animal {
     private byte[] imagens;
 
     private Cliente cliente;
-    private OrigemDestino origemDestino;
+    
 
     public Animal() {
     }
@@ -69,11 +68,11 @@ public class Animal {
         this.peso = peso;
     }
 
-    public double getTamanho() {
+    public int getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(double tamanho) {
+    public void setTamanho(int tamanho) {
         this.tamanho = tamanho;
     }
 
@@ -133,14 +132,7 @@ public class Animal {
         this.cliente = cliente;
     }
 
-    public OrigemDestino getOrigemDestino() {
-        return origemDestino;
-    }
-
-    public void setOrigemDestino(OrigemDestino origemDestino) {
-        this.origemDestino = origemDestino;
-    }
-
+    
     @Override
     public String toString() {
         return nome;

@@ -12,6 +12,8 @@ public class OrigemDestino {
     private String enderecoPaisOrigem;
     private String enderecoPaisDestino;
     private String companhiaAerea;
+    
+    private Animal animal;
 
     public OrigemDestino() {
     }
@@ -63,6 +65,15 @@ public class OrigemDestino {
     public void setCompanhiaAerea(String companhiaAerea) {
         this.companhiaAerea = companhiaAerea;
     }
+
+    public Animal getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
+    
 
     @Override
     public String toString() {

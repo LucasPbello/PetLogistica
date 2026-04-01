@@ -5,8 +5,8 @@ import java.nio.file.Files;
 import javax.swing.JFileChooser;
 import classes.Animal;
 import classes.Cliente;
-import classes.OrigemDestino;
 import classes.Usuario;
+import java.time.format.DateTimeFormatter;
 import dao.AnimalDAO;
 import dao.ClienteDAO;
 import dao.OrigemDestinoDAO;
@@ -27,7 +27,8 @@ public class TelaAnimal extends javax.swing.JFrame {
 
     private Animal animal = new Animal();
     private List<Cliente> listaClientes = new ArrayList<>();
-    private List<OrigemDestino> listaOrigem = new ArrayList<>();
+    private boolean editando = false;
+    private int idAtual = 0;
 
     public TelaAnimal() {
         initComponents();
@@ -88,9 +89,8 @@ public class TelaAnimal extends javax.swing.JFrame {
         cmbTamanho = new javax.swing.JComboBox<>();
         cmbCaixa = new javax.swing.JComboBox<>();
         lblCliente = new javax.swing.JLabel();
-        lblOrigem = new javax.swing.JLabel();
-        cmbOrigem = new javax.swing.JComboBox<>();
         cmbCliente = new javax.swing.JComboBox<>();
+        btnAtualizar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -238,6 +238,11 @@ public class TelaAnimal extends javax.swing.JFrame {
         btnLista.setText("LISTA DOS ANIMAIS");
         btnLista.setToolTipText("Navega até a lista de animais");
         btnLista.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListaActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -254,8 +259,13 @@ public class TelaAnimal extends javax.swing.JFrame {
         txtData.setToolTipText("Digitar data de nascimento do pet");
 
         cmbTamanho.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbTamanho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequeno porte", "Medio porte", "Grande porte", " " }));
+        cmbTamanho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequeno porte", "Medio porte", "Grande porte" }));
         cmbTamanho.setToolTipText("Escolher qual o tamanho do pet");
+        cmbTamanho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTamanhoActionPerformed(evt);
+            }
+        });
 
         cmbCaixa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbCaixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caixa 200", "Caixa 300", "Caixa 400", "Caixa 500", "Caixa 700" }));
@@ -266,31 +276,47 @@ public class TelaAnimal extends javax.swing.JFrame {
         lblCliente.setToolTipText("Nome do cliente");
         lblCliente.setOpaque(true);
 
-        lblOrigem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblOrigem.setText("OrigemDestino:");
-        lblOrigem.setToolTipText("Origem e destino do pet");
-        lblOrigem.setOpaque(true);
-
-        cmbOrigem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbOrigem.setToolTipText("Buscar a origem e destino do pet");
-
         cmbCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbCliente.setToolTipText("Buscar cliente associado a pet");
+
+        btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAtualizar.setText("ATUALIZAR");
+        btnAtualizar.setToolTipText("Salvar os dados escritos");
+        btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(jLabel11)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblMicrochip, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMicrochip, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbCaixa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,44 +326,22 @@ public class TelaAnimal extends javax.swing.JFrame {
                                         .addComponent(btnCarteirinha)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnLista)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(79, 79, 79)
                                         .addComponent(lblDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(btnDocumentos)
-                                                .addGap(85, 85, 85)
-                                                .addComponent(lblImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnImagens))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(lblOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(cmbOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblMicrochip, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMicrochip, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(btnDocumentos)
+                                        .addGap(85, 85, 85)
+                                        .addComponent(lblImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnImagens))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -367,6 +371,14 @@ public class TelaAnimal extends javax.swing.JFrame {
                                         .addComponent(txtData))))
                             .addComponent(txtNome))))
                 .addGap(20, 20, 20))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(jLabel11)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLista)
+                .addGap(278, 278, 278))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,15 +422,15 @@ public class TelaAnimal extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCliente)
-                    .addComponent(lblOrigem)
-                    .addComponent(cmbOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar)
-                    .addComponent(btnLista)
-                    .addComponent(btnVoltar))
+                    .addComponent(btnVoltar)
+                    .addComponent(btnAtualizar))
+                .addGap(35, 35, 35)
+                .addComponent(btnLista)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -574,8 +586,7 @@ public class TelaAnimal extends javax.swing.JFrame {
                     || txtPeso.getText().isEmpty()
                     || txtMicrochip.getText().isEmpty()
                     || txtData.getText().isEmpty()
-                    || cmbCliente.getSelectedIndex() == -1
-                    || cmbOrigem.getSelectedIndex() == -1) {
+                    || cmbCliente.getSelectedIndex() == -1) {
 
                 JOptionPane.showMessageDialog(null, "Preencha TODOS os campos!");
                 return;
@@ -629,26 +640,35 @@ public class TelaAnimal extends javax.swing.JFrame {
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Data inválida! Use dd/MM/yyyy");
-                return; 
+                return;
             }
 
             // ? CLIENTE
             int indexCliente = cmbCliente.getSelectedIndex();
             Cliente clienteSelecionado = listaClientes.get(indexCliente);
 
-            // ? ORIGEM DESTINO
-            int indexOD = cmbOrigem.getSelectedIndex();
-            OrigemDestino odSelecionado = listaOrigem.get(indexOD);
-
             animal.setCliente(clienteSelecionado);
-            animal.setOrigemDestino(odSelecionado);
 
-            // ? SALVAR
-            dao.inserir(animal);
+            if (editando) {
 
-            JOptionPane.showMessageDialog(null, "Animal salvo com sucesso!");
+                animal.setIdAnimal(idAtual);
+                dao.atualizar(animal);
+
+                JOptionPane.showMessageDialog(null, "Origem e destino atualizado com sucesso!");
+
+            } else {
+
+                dao.inserir(animal);
+
+                JOptionPane.showMessageDialog(null, "Origem e destino salvo com sucesso!");
+            }
 
             limparCampos();
+
+            // RESETAR MODO
+            editando = false;
+            idAtual = 0;
+            btnSalvar.setEnabled(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + e.getMessage());
@@ -665,6 +685,95 @@ public class TelaAnimal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            AnimalDAO dao = new AnimalDAO();
+
+            // VALIDAÇÃO
+            if (txtNome.getText().isEmpty()
+                    || txtRaca.getText().isEmpty()
+                    || txtCor.getText().isEmpty()
+                    || txtPeso.getText().isEmpty()
+                    || txtMicrochip.getText().isEmpty()
+                    || txtData.getText().isEmpty()
+                    || cmbCliente.getSelectedIndex() == -1) {
+
+                JOptionPane.showMessageDialog(null, "Preencha TODOS os campos!");
+                return;
+            }
+
+            Animal a = new Animal();
+
+            a.setIdAnimal(idAtual); // ? IMPORTANTE
+
+            a.setNome(txtNome.getText());
+            a.setRaca(txtRaca.getText());
+            a.setCor(txtCor.getText());
+            a.setMicrochip(txtMicrochip.getText());
+
+            // PESO
+            a.setPeso(Double.parseDouble(txtPeso.getText()));
+
+            // TAMANHO
+            String tamanho = cmbTamanho.getSelectedItem().toString();
+
+            switch (tamanho) {
+                case "Pequeno porte":
+                    animal.setTamanho(1);
+                    break;
+                case "Medio porte":
+                    animal.setTamanho(2);
+                    break;
+                case "Grande porte":
+                    animal.setTamanho(3);
+                    break;
+            }
+
+            // CAIXA
+            String caixa = cmbCaixa.getSelectedItem().toString();
+            int numeroCaixa = Integer.parseInt(caixa.replace("Caixa ", ""));
+            a.setCaixaTransporte(numeroCaixa);
+
+            // DATA
+            java.time.format.DateTimeFormatter formatter
+                    = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            a.setDataNascimento(
+                    java.time.LocalDate.parse(txtData.getText(), formatter)
+            );
+
+            // CLIENTE
+            Cliente clienteSelecionado = listaClientes.get(cmbCliente.getSelectedIndex());
+            a.setCliente(clienteSelecionado);
+
+            // ATUALIZAR
+            dao.atualizar(a);
+
+            JOptionPane.showMessageDialog(null, "Animal atualizado com sucesso!");
+
+            limparCampos();
+
+            editando = false;
+            idAtual = 0;
+            btnSalvar.setEnabled(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaActionPerformed
+        ListaAnimal fre = new ListaAnimal();
+
+        fre.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnListaActionPerformed
+
+    private void cmbTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTamanhoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTamanhoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -692,6 +801,7 @@ public class TelaAnimal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCarteirinha;
     private javax.swing.JButton btnDocumentos;
     private javax.swing.JButton btnImagens;
@@ -701,7 +811,6 @@ public class TelaAnimal extends javax.swing.JFrame {
     private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> cmbCaixa;
     private javax.swing.JComboBox<String> cmbCliente;
-    private javax.swing.JComboBox<String> cmbOrigem;
     private javax.swing.JComboBox<String> cmbTamanho;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JMenu jMenu1;
@@ -719,7 +828,6 @@ public class TelaAnimal extends javax.swing.JFrame {
     private javax.swing.JLabel lblImagens;
     private javax.swing.JLabel lblMicrochip;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JLabel lblOrigem;
     private javax.swing.JLabel lblPeso;
     private javax.swing.JLabel lblRaca;
     private javax.swing.JLabel lblTamanho;
@@ -731,6 +839,50 @@ public class TelaAnimal extends javax.swing.JFrame {
     private javax.swing.JTextField txtRaca;
     // End of variables declaration//GEN-END:variables
 
+    public void setAnimal(Animal a) {
+        txtNome.setText(a.getNome());
+        txtRaca.setText(a.getRaca());
+        txtCor.setText(a.getCor());
+        txtPeso.setText(String.valueOf(a.getPeso()));
+        txtMicrochip.setText(a.getMicrochip());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        if (a.getDataNascimento() != null) {
+            txtData.setText(a.getDataNascimento().format(formatter));
+        }
+
+        switch (a.getTamanho()) {
+            case 1:
+                cmbTamanho.setSelectedItem("Pequeno porte");
+                break;
+            case 2:
+                cmbTamanho.setSelectedItem("Medio porte");
+                break;
+            case 3:
+                cmbTamanho.setSelectedItem("Grande porte");
+                break;
+            default:
+                cmbTamanho.setSelectedIndex(0);
+        }
+
+        // CAIXA
+        cmbCaixa.setSelectedItem("Caixa " + a.getCaixaTransporte());
+
+        // CLIENTE
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if (listaClientes.get(i).getIdCliente() == a.getCliente().getIdCliente()) {
+                cmbCliente.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        idAtual = a.getIdAnimal();
+        editando = true;
+
+        btnSalvar.setEnabled(false);
+    }
+
     private void carregarCombos() {
 
         try {
@@ -739,22 +891,12 @@ public class TelaAnimal extends javax.swing.JFrame {
 
             // limpa antes
             cmbCliente.removeAllItems();
-            cmbOrigem.removeAllItems();
 
             // ? CLIENTES
             listaClientes = clienteDAO.listar();
 
             for (Cliente c : listaClientes) {
                 cmbCliente.addItem(c.getNome());
-            }
-
-            // ? ORIGEM DESTINO
-            listaOrigem = odDAO.listar();
-
-            for (OrigemDestino od : listaOrigem) {
-                cmbOrigem.addItem(
-                        od.getPaisOrigem() + " ? " + od.getPaisDestino()
-                );
             }
 
         } catch (Exception e) {

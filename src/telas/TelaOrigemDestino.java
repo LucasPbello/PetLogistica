@@ -1,8 +1,12 @@
 package telas;
 
+import classes.Animal;
 import classes.OrigemDestino;
 import classes.Usuario;
+import dao.AnimalDAO;
 import dao.OrigemDestinoDAO;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import permissoes.Sessao;
 
@@ -13,10 +17,13 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
     public TelaOrigemDestino() {
         initComponents();
         limparCampos();
+        carregarCombos();
     }
-
+    private List<Animal> listaAnimal = new ArrayList<>();
     private OrigemDestino origemDestino = new OrigemDestino();
     Usuario usuario = Sessao.getUsuario();
+    private boolean editando = false;
+    private int idAtual = 0;
 
     public void limparCampos() {
         txtOrigem.setText("");
@@ -48,6 +55,9 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         lblCompanhia = new javax.swing.JLabel();
         txtDestino = new javax.swing.JTextField();
+        btnAtualizar = new javax.swing.JButton();
+        lblAnimal = new javax.swing.JLabel();
+        cmbAnimal = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -145,6 +155,11 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
         btnLista.setText("LISTA DAS VIAGENS");
         btnLista.setToolTipText("Navega até a lista de viagens");
         btnLista.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListaActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -170,50 +185,77 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
             }
         });
 
+        btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAtualizar.setText("ATUALIZAR");
+        btnAtualizar.setToolTipText("Salvar os dados escritos");
+        btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
+        lblAnimal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblAnimal.setText("Animal:");
+        lblAnimal.setToolTipText("Nome do cliente");
+        lblAnimal.setOpaque(true);
+
+        cmbAnimal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbAnimal.setToolTipText("Buscar cliente associado a pet");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(129, 129, 129)
                         .addComponent(jLabel11))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnLista)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblOrigem)
-                                .addGap(24, 24, 24)
-                                .addComponent(txtOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)
-                                .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblEnderecoOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblEnderecoDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(24, 24, 24)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtEnderecoOrigem)
-                                    .addComponent(txtEnderecoDestino)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblCompanhia, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCompanhia, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblCompanhia, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtCompanhia))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cmbAnimal, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblOrigem)
+                                    .addGap(24, 24, 24)
+                                    .addComponent(txtOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(51, 51, 51)
+                                    .addComponent(lblDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblEnderecoOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblEnderecoDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(24, 24, 24)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtEnderecoDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                                        .addComponent(txtEnderecoOrigem)))))))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnLista)
+                .addGap(266, 266, 266))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,12 +282,18 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCompanhia)
                     .addComponent(txtCompanhia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAnimal)
+                    .addComponent(cmbAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar)
-                    .addComponent(btnLista)
-                    .addComponent(btnVoltar))
+                    .addComponent(btnVoltar)
+                    .addComponent(btnAtualizar))
+                .addGap(35, 35, 35)
+                .addComponent(btnLista)
                 .addGap(50, 50, 50))
         );
 
@@ -286,9 +334,7 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +380,8 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
                     || txtDestino.getText().isEmpty()
                     || txtEnderecoOrigem.getText().isEmpty()
                     || txtEnderecoDestino.getText().isEmpty()
-                    || txtCompanhia.getText().isEmpty()) {
+                    || txtCompanhia.getText().isEmpty()
+                    || cmbAnimal.getSelectedIndex() == -1) {
 
                 JOptionPane.showMessageDialog(null, "Preencha TODOS os campos!");
                 return;
@@ -347,12 +394,31 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
             origemDestino.setEnderecoPaisDestino(txtEnderecoDestino.getText());
             origemDestino.setCompanhiaAerea(txtCompanhia.getText());
 
-            // ? SALVAR
-            dao.inserir(origemDestino);
+            int indexCliente = cmbAnimal.getSelectedIndex();
+            Animal animalSelecionado = listaAnimal.get(indexCliente);
 
-            JOptionPane.showMessageDialog(null, "Origem e Destino salvo com sucesso!");
+            origemDestino.setAnimal(animalSelecionado);
+
+            if (editando) {
+
+                origemDestino.setIdOrigemDestino(idAtual);
+                dao.atualizar(origemDestino);
+
+                JOptionPane.showMessageDialog(null, "Origem e destino atualizado com sucesso!");
+
+            } else {
+
+                dao.inserir(origemDestino);
+
+                JOptionPane.showMessageDialog(null, "Origem e destino salvo com sucesso!");
+            }
 
             limparCampos();
+
+            // RESETAR MODO
+            editando = false;
+            idAtual = 0;
+            btnSalvar.setEnabled(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + e.getMessage());
@@ -371,6 +437,47 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
     private void txtDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDestinoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDestinoActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            OrigemDestinoDAO dao = new OrigemDestinoDAO();
+
+            // VALIDAÇÃO
+            if (txtOrigem.getText().isEmpty()
+                    || txtDestino.getText().isEmpty()
+                    || txtEnderecoOrigem.getText().isEmpty()
+                    || txtEnderecoDestino.getText().isEmpty()
+                    || txtCompanhia.getText().isEmpty()
+                    || cmbAnimal.getSelectedIndex() == -1) {
+
+                JOptionPane.showMessageDialog(null, "Preencha TODOS os campos!");
+                return;
+            }
+
+            //  SET BÁSICO
+            origemDestino.setPaisOrigem(txtOrigem.getText());
+            origemDestino.setPaisDestino(txtDestino.getText());
+            origemDestino.setEnderecoPaisOrigem(txtEnderecoOrigem.getText());
+            origemDestino.setEnderecoPaisDestino(txtEnderecoDestino.getText());
+            origemDestino.setCompanhiaAerea(txtCompanhia.getText());
+
+            dao.atualizar(origemDestino);
+
+            JOptionPane.showMessageDialog(null, "Origem e destino atualizado com sucesso!");
+
+            limparCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaActionPerformed
+        ListaOrigemDestino fre = new ListaOrigemDestino ();
+
+        fre.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnListaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,10 +505,12 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnLista;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<String> cmbAnimal;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -409,6 +518,7 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAnimal;
     private javax.swing.JLabel lblCompanhia;
     private javax.swing.JLabel lblDestino;
     private javax.swing.JLabel lblEnderecoDestino;
@@ -420,4 +530,47 @@ public class TelaOrigemDestino extends javax.swing.JFrame {
     private javax.swing.JTextField txtEnderecoOrigem;
     private javax.swing.JTextField txtOrigem;
     // End of variables declaration//GEN-END:variables
+
+    public void setOrigemDestino(OrigemDestino o) {
+        this.origemDestino = o;
+
+        txtOrigem.setText(o.getPaisOrigem());
+        txtDestino.setText(o.getPaisDestino());
+        txtEnderecoDestino.setText(o.getEnderecoPaisOrigem());
+        txtEnderecoOrigem.setText(o.getEnderecoPaisDestino());
+        txtCompanhia.setText(o.getCompanhiaAerea());
+
+        // selecionar cliente no combo
+        for (int i = 0; i < listaAnimal.size(); i++) {
+            if (listaAnimal.get(i).getIdAnimal() == o.getAnimal().getIdAnimal()) {
+                cmbAnimal.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        idAtual = o.getIdOrigemDestino();
+        editando = true;
+
+        btnSalvar.setEnabled(false); // ? BLOQUEIA SALVAR
+    }
+
+    private void carregarCombos() {
+
+        try {
+            AnimalDAO animalDAO = new AnimalDAO();
+
+            // limpa antes
+            cmbAnimal.removeAllItems();
+
+            // ? CLIENTES
+            listaAnimal = animalDAO.listar();
+
+            for (Animal a : listaAnimal) {
+                cmbAnimal.addItem(a.getNome());
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar combos: " + e.getMessage());
+        }
+    }
 }

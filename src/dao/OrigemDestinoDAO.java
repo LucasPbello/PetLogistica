@@ -4,6 +4,7 @@ package dao;
  *
  * @author bello
  */
+import classes.Animal;
 import classes.OrigemDestino;
 import conexao.Conexao;
 
@@ -15,7 +16,7 @@ public class OrigemDestinoDAO {
 
     // INSERT
     public void inserir(OrigemDestino od) {
-        String sql = "INSERT INTO OrigemDestino (paisOrigem, paisDestino, enderecoPaisOrigem, enderecoPaisDestino, companhiaAerea) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO OrigemDestino (paisOrigem, paisDestino, enderecoPaisOrigem, enderecoPaisDestino, companhiaAerea, idAnimal) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -24,6 +25,7 @@ public class OrigemDestinoDAO {
             stmt.setString(3, od.getEnderecoPaisOrigem());
             stmt.setString(4, od.getEnderecoPaisDestino());
             stmt.setString(5, od.getCompanhiaAerea());
+            stmt.setInt(6, od.getAnimal().getIdAnimal());
 
             stmt.executeUpdate();
             System.out.println("OrigemDestino inserido!");
@@ -35,7 +37,7 @@ public class OrigemDestinoDAO {
 
     // UPDATE
     public void atualizar(OrigemDestino od) {
-        String sql = "UPDATE OrigemDestino SET paisOrigem=?, paisDestino=?, enderecoPaisOrigem=?, enderecoPaisDestino=?, companhiaAerea=? WHERE idOrigemDestino=?";
+        String sql = "UPDATE OrigemDestino SET paisOrigem=?, paisDestino=?, enderecoPaisOrigem=?, enderecoPaisDestino=?, companhiaAerea=?, idAnimal=? WHERE idOrigemDestino=?";
 
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -44,7 +46,8 @@ public class OrigemDestinoDAO {
             stmt.setString(3, od.getEnderecoPaisOrigem());
             stmt.setString(4, od.getEnderecoPaisDestino());
             stmt.setString(5, od.getCompanhiaAerea());
-            stmt.setInt(6, od.getIdOrigemDestino());
+            stmt.setInt(6, od.getAnimal().getIdAnimal());
+            stmt.setInt(7, od.getIdOrigemDestino());
 
             stmt.executeUpdate();
             System.out.println("OrigemDestino atualizado!");
@@ -88,6 +91,10 @@ public class OrigemDestinoDAO {
                 od.setEnderecoPaisOrigem(rs.getString("enderecoPaisOrigem"));
                 od.setEnderecoPaisDestino(rs.getString("enderecoPaisDestino"));
                 od.setCompanhiaAerea(rs.getString("companhiaAerea"));
+
+                Animal a = new Animal();
+                a.setIdAnimal(rs.getInt("idAnimal"));
+                od.setAnimal(a);
             }
 
         } catch (SQLException e) {
@@ -99,26 +106,40 @@ public class OrigemDestinoDAO {
 
     // LISTAR TODOS
     public List<OrigemDestino> listar() {
-        String sql = "SELECT * FROM OrigemDestino";
         List<OrigemDestino> lista = new ArrayList<>();
 
-        try (Connection conn = Conexao.conectar(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        String sql = "SELECT od.*, a.idAnimal, a.nome AS nomeAnimal "
+                + "FROM OrigemDestino od "
+                + "LEFT JOIN Animal a ON od.idAnimal = a.idAnimal";
+
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                OrigemDestino od = new OrigemDestino();
+                OrigemDestino o = new OrigemDestino();
 
-                od.setIdOrigemDestino(rs.getInt("idOrigemDestino"));
-                od.setPaisOrigem(rs.getString("paisOrigem"));
-                od.setPaisDestino(rs.getString("paisDestino"));
-                od.setEnderecoPaisOrigem(rs.getString("enderecoPaisOrigem"));
-                od.setEnderecoPaisDestino(rs.getString("enderecoPaisDestino"));
-                od.setCompanhiaAerea(rs.getString("companhiaAerea"));
+                o.setIdOrigemDestino(rs.getInt("idOrigemDestino"));
+                o.setPaisOrigem(rs.getString("paisOrigem"));
+                o.setPaisDestino(rs.getString("paisDestino"));
+                o.setEnderecoPaisOrigem(rs.getString("enderecoPaisOrigem"));
+                o.setEnderecoPaisDestino(rs.getString("enderecoPaisDestino"));
+                o.setCompanhiaAerea(rs.getString("companhiaAerea"));
 
-                lista.add(od);
+                // ? ANIMAL
+                int idAnimal = rs.getInt("idAnimal");
+
+                if (idAnimal > 0) {
+                    Animal a = new Animal();
+                    a.setIdAnimal(idAnimal);
+                    a.setNome(rs.getString("nomeAnimal"));
+
+                    o.setAnimal(a);
+                }
+
+                lista.add(o);
             }
 
-        } catch (SQLException e) {
-            System.out.println("Erro ao listar OrigemDestino: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return lista;
