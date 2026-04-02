@@ -40,13 +40,16 @@ public class TelaAnimal extends javax.swing.JFrame {
 
     public void limparCampos() {
         txtNome.setText("");
+        txtEspecie.setText("");
         txtRaca.setText("");
+        txtTamanho.setText("");
         txtPeso.setText("");
         txtCor.setText("");
         txtData.setText("");
-        cmbTamanho.setSelectedIndex(0);
+        cmbSexo.setSelectedIndex(0);
         cmbCaixa.setSelectedIndex(0);
-        txtMicrochip.setText("");
+        lblDocumentos.setText("Documentos:");
+        lblImagens.setText("Imagens:");
 
     }
 
@@ -64,19 +67,15 @@ public class TelaAnimal extends javax.swing.JFrame {
         lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         lblRaca = new javax.swing.JLabel();
-        txtRaca = new javax.swing.JTextField();
+        txtTamanho = new javax.swing.JTextField();
         lblCor = new javax.swing.JLabel();
         txtCor = new javax.swing.JTextField();
         lblPeso = new javax.swing.JLabel();
         txtPeso = new javax.swing.JTextField();
         lblCaixa = new javax.swing.JLabel();
-        txtMicrochip = new javax.swing.JTextField();
-        lblMicrochip = new javax.swing.JLabel();
         lblTamanho = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
-        lblCarteirinha = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        btnCarteirinha = new javax.swing.JButton();
         lblDocumentos = new javax.swing.JLabel();
         btnDocumentos = new javax.swing.JButton();
         lblImagens = new javax.swing.JLabel();
@@ -86,11 +85,15 @@ public class TelaAnimal extends javax.swing.JFrame {
         btnLista = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         txtData = new javax.swing.JTextField();
-        cmbTamanho = new javax.swing.JComboBox<>();
+        cmbSexo = new javax.swing.JComboBox<>();
         cmbCaixa = new javax.swing.JComboBox<>();
         lblCliente = new javax.swing.JLabel();
         cmbCliente = new javax.swing.JComboBox<>();
         btnAtualizar = new javax.swing.JButton();
+        txtRaca = new javax.swing.JTextField();
+        lblSexo = new javax.swing.JLabel();
+        lblEspecie = new javax.swing.JLabel();
+        txtEspecie = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -122,8 +125,8 @@ public class TelaAnimal extends javax.swing.JFrame {
         lblRaca.setToolTipText("Raça do pet");
         lblRaca.setOpaque(true);
 
-        txtRaca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtRaca.setToolTipText("Digitar raça do pet");
+        txtTamanho.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTamanho.setToolTipText("Digitar tamanho do pet");
 
         lblCor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblCor.setText("Cor:");
@@ -146,14 +149,6 @@ public class TelaAnimal extends javax.swing.JFrame {
         lblCaixa.setToolTipText("Tamanho da caixa de transporte");
         lblCaixa.setOpaque(true);
 
-        txtMicrochip.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtMicrochip.setToolTipText("Digitar número do microchip do pet");
-
-        lblMicrochip.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblMicrochip.setText("Microchip:");
-        lblMicrochip.setToolTipText("Número do microchip do pet");
-        lblMicrochip.setOpaque(true);
-
         lblTamanho.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblTamanho.setText("Tamanho:");
         lblTamanho.setToolTipText("Tamanho do pet");
@@ -164,24 +159,10 @@ public class TelaAnimal extends javax.swing.JFrame {
         lblData.setToolTipText("Data de nascimento do pet");
         lblData.setOpaque(true);
 
-        lblCarteirinha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblCarteirinha.setText("Carteirinha:");
-        lblCarteirinha.setToolTipText("Carteirinha de vacina do pet");
-        lblCarteirinha.setOpaque(true);
-
         jLabel11.setBackground(new java.awt.Color(102, 204, 255));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel11.setText("Informações do PET");
         jLabel11.setOpaque(true);
-
-        btnCarteirinha.setText("SELECIONAR");
-        btnCarteirinha.setToolTipText("Selecionar imagem da carteirinha de vacina do pet");
-        btnCarteirinha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnCarteirinha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarteirinhaActionPerformed(evt);
-            }
-        });
 
         lblDocumentos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblDocumentos.setText("Documentos:");
@@ -258,12 +239,12 @@ public class TelaAnimal extends javax.swing.JFrame {
         txtData.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtData.setToolTipText("Digitar data de nascimento do pet");
 
-        cmbTamanho.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbTamanho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pequeno porte", "Medio porte", "Grande porte" }));
-        cmbTamanho.setToolTipText("Escolher qual o tamanho do pet");
-        cmbTamanho.addActionListener(new java.awt.event.ActionListener() {
+        cmbSexo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Macho", "Fêmea" }));
+        cmbSexo.setToolTipText("Escolher qual o sexo do pet");
+        cmbSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTamanhoActionPerformed(evt);
+                cmbSexoActionPerformed(evt);
             }
         });
 
@@ -290,95 +271,107 @@ public class TelaAnimal extends javax.swing.JFrame {
             }
         });
 
+        txtRaca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtRaca.setToolTipText("Digitar raça do pet");
+
+        lblSexo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblSexo.setText("Sexo:");
+        lblSexo.setToolTipText("Sexo do pet");
+        lblSexo.setOpaque(true);
+
+        lblEspecie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblEspecie.setText("Espécie:");
+        lblEspecie.setToolTipText("Espécie do pet");
+        lblEspecie.setOpaque(true);
+
+        txtEspecie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEspecie.setToolTipText("Digitar espécie do pet");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblMicrochip, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMicrochip, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbCaixa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lblCarteirinha, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnCarteirinha)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(79, 79, 79)
-                                        .addComponent(lblDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnDocumentos)
-                                        .addGap(85, 85, 85)
-                                        .addComponent(lblImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnImagens))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(lblRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(lblCor, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(31, 31, 31)
-                                        .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtData))))
-                            .addComponent(txtNome))))
-                .addGap(20, 20, 20))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(175, 175, 175)
                 .addComponent(jLabel11)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLista)
-                .addGap(278, 278, 278))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(20, 20, 20)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(lblCaixa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblData, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(cmbCaixa, 0, 217, Short.MAX_VALUE)
+                                                .addComponent(txtData)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(20, 20, 20)
+                                                    .addComponent(lblPeso, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(txtEspecie)
+                                                    .addGap(20, 20, 20)
+                                                    .addComponent(lblCor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cmbCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(lblDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(btnDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(lblTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(20, 20, 20)
+                                    .addComponent(lblImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(81, 81, 81))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(246, 246, 246)
+                                .addComponent(btnLista)))
+                        .addGap(20, 20, 20))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,27 +387,29 @@ public class TelaAnimal extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRaca)
-                    .addComponent(lblCor)
-                    .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPeso)
                     .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMicrochip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMicrochip)
+                    .addComponent(lblEspecie)
+                    .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCor)
+                    .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblData)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSexo)
+                    .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTamanho)
                     .addComponent(lblCaixa)
-                    .addComponent(cmbTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCarteirinha)
-                    .addComponent(btnCarteirinha)
                     .addComponent(lblDocumentos)
                     .addComponent(btnDocumentos)
                     .addComponent(lblImagens)
@@ -431,7 +426,7 @@ public class TelaAnimal extends javax.swing.JFrame {
                     .addComponent(btnAtualizar))
                 .addGap(35, 35, 35)
                 .addComponent(btnLista)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
 
         jMenu1.setBackground(new java.awt.Color(0, 0, 255));
@@ -471,7 +466,7 @@ public class TelaAnimal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,33 +480,6 @@ public class TelaAnimal extends javax.swing.JFrame {
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
-
-    private void btnCarteirinhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteirinhaActionPerformed
-        try {
-            JFileChooser fc = new JFileChooser();
-
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter(
-                    "Arquivos PDF e Imagens", "pdf", "jpg", "png"
-            );
-            fc.setFileFilter(filtro);
-
-            int res = fc.showOpenDialog(null);
-
-            if (res == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-
-                byte[] dados = Files.readAllBytes(file.toPath());
-
-                animal.setCarteirinha(dados);
-
-                lblCarteirinha.setText(file.getName());
-            }
-
-        } catch (IOException ex) {
-            System.out.println("Erro ao ler arquivo: " + ex.getMessage());
-        }
-
-    }//GEN-LAST:event_btnCarteirinhaActionPerformed
 
     private void btnDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentosActionPerformed
         try {
@@ -578,14 +546,18 @@ public class TelaAnimal extends javax.swing.JFrame {
 
         try {
             AnimalDAO dao = new AnimalDAO();
+            animal = new Animal();
 
             //  VALIDAÇÃO GERAL (ANTES DE TUDO)
             if (txtNome.getText().isEmpty()
+                    || txtEspecie.getText().isEmpty()
                     || txtRaca.getText().isEmpty()
                     || txtCor.getText().isEmpty()
+                    || cmbSexo.getSelectedIndex() == -1
                     || txtPeso.getText().isEmpty()
-                    || txtMicrochip.getText().isEmpty()
+                    || txtTamanho.getText().isEmpty()
                     || txtData.getText().isEmpty()
+                    || cmbCaixa.getSelectedIndex() == -1
                     || cmbCliente.getSelectedIndex() == -1) {
 
                 JOptionPane.showMessageDialog(null, "Preencha TODOS os campos!");
@@ -595,32 +567,36 @@ public class TelaAnimal extends javax.swing.JFrame {
             //  SET BÁSICO
             animal.setNome(txtNome.getText());
             animal.setRaca(txtRaca.getText());
+            animal.setEspecie(txtEspecie.getText());
             animal.setCor(txtCor.getText());
-            animal.setMicrochip(txtMicrochip.getText());
+            animal.setSexo(cmbSexo.getSelectedItem().toString());
+            String tamanhoTexto = txtTamanho.getText().replace(",", ".");
+            double tamanho = Double.parseDouble(tamanhoTexto);
 
-            //  PESO (CORRIGIDO)
+            animal.setTamanho(tamanho);
+
+            //  PESO 
             try {
-                animal.setPeso(Double.parseDouble(txtPeso.getText()));
+                String pesoTexto = txtPeso.getText().replace(",", ".");
+                animal.setPeso(Double.parseDouble(pesoTexto));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Peso inválido!");
                 return;
             }
-
-            //  TAMANHO
-            String tamanho = cmbTamanho.getSelectedItem().toString();
-
-            switch (tamanho) {
-                case "Pequeno porte":
-                    animal.setTamanho(1);
-                    break;
-                case "Medio porte":
-                    animal.setTamanho(2);
-                    break;
-                case "Grande porte":
-                    animal.setTamanho(3);
-                    break;
+            if (tamanho <= 0 || tamanho > 1000) {
+                JOptionPane.showMessageDialog(null, "Tamanho inválido!");
+                return;
             }
 
+            double peso = Double.parseDouble(txtPeso.getText().replace(",", "."));
+
+            if (peso <= 0 || peso > 1000) {
+                JOptionPane.showMessageDialog(null, "Peso inválido!");
+                return;
+            }
+
+            animal.setPeso(peso);
+            
             //  CAIXA
             String caixa = cmbCaixa.getSelectedItem().toString();
             int numeroCaixa = Integer.parseInt(caixa.replace("Caixa ", ""));
@@ -654,13 +630,13 @@ public class TelaAnimal extends javax.swing.JFrame {
                 animal.setIdAnimal(idAtual);
                 dao.atualizar(animal);
 
-                JOptionPane.showMessageDialog(null, "Origem e destino atualizado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Animal atualizado com sucesso!");
 
             } else {
 
                 dao.inserir(animal);
 
-                JOptionPane.showMessageDialog(null, "Origem e destino salvo com sucesso!");
+                JOptionPane.showMessageDialog(null, "Animal salvo com sucesso!");
             }
 
             limparCampos();
@@ -692,11 +668,14 @@ public class TelaAnimal extends javax.swing.JFrame {
 
             // VALIDAÇÃO
             if (txtNome.getText().isEmpty()
+                    || txtEspecie.getText().isEmpty()
                     || txtRaca.getText().isEmpty()
+                    || cmbSexo.getSelectedIndex() == -1
                     || txtCor.getText().isEmpty()
+                    || txtTamanho.getText().isEmpty()
                     || txtPeso.getText().isEmpty()
-                    || txtMicrochip.getText().isEmpty()
                     || txtData.getText().isEmpty()
+                    || cmbCaixa.getSelectedIndex() == -1
                     || cmbCliente.getSelectedIndex() == -1) {
 
                 JOptionPane.showMessageDialog(null, "Preencha TODOS os campos!");
@@ -709,28 +688,20 @@ public class TelaAnimal extends javax.swing.JFrame {
 
             a.setNome(txtNome.getText());
             a.setRaca(txtRaca.getText());
+            a.setEspecie(txtEspecie.getText());
             a.setCor(txtCor.getText());
-            a.setMicrochip(txtMicrochip.getText());
+            a.setSexo(cmbSexo.getSelectedItem().toString());
+            a.setDocumentos(animal.getDocumentos());
+            a.setImagens(animal.getImagens());
 
-            // PESO
-            a.setPeso(Double.parseDouble(txtPeso.getText()));
-
-            // TAMANHO
-            String tamanho = cmbTamanho.getSelectedItem().toString();
-
-            switch (tamanho) {
-                case "Pequeno porte":
-                    animal.setTamanho(1);
-                    break;
-                case "Medio porte":
-                    animal.setTamanho(2);
-                    break;
-                case "Grande porte":
-                    animal.setTamanho(3);
-                    break;
+            try {
+                a.setPeso(Double.parseDouble(txtPeso.getText()));
+                a.setTamanho(Double.parseDouble(txtTamanho.getText()));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Peso ou tamanho inválido!");
+                return;
             }
 
-            // CAIXA
             String caixa = cmbCaixa.getSelectedItem().toString();
             int numeroCaixa = Integer.parseInt(caixa.replace("Caixa ", ""));
             a.setCaixaTransporte(numeroCaixa);
@@ -771,9 +742,9 @@ public class TelaAnimal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnListaActionPerformed
 
-    private void cmbTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTamanhoActionPerformed
+    private void cmbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSexoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmbTamanhoActionPerformed
+    }//GEN-LAST:event_cmbSexoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -802,7 +773,6 @@ public class TelaAnimal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
-    private javax.swing.JButton btnCarteirinha;
     private javax.swing.JButton btnDocumentos;
     private javax.swing.JButton btnImagens;
     private javax.swing.JButton btnLimpar;
@@ -811,7 +781,7 @@ public class TelaAnimal extends javax.swing.JFrame {
     private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> cmbCaixa;
     private javax.swing.JComboBox<String> cmbCliente;
-    private javax.swing.JComboBox<String> cmbTamanho;
+    private javax.swing.JComboBox<String> cmbSexo;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -820,50 +790,39 @@ public class TelaAnimal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCaixa;
-    private javax.swing.JLabel lblCarteirinha;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblCor;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDocumentos;
+    private javax.swing.JLabel lblEspecie;
     private javax.swing.JLabel lblImagens;
-    private javax.swing.JLabel lblMicrochip;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblPeso;
     private javax.swing.JLabel lblRaca;
+    private javax.swing.JLabel lblSexo;
     private javax.swing.JLabel lblTamanho;
     private javax.swing.JTextField txtCor;
     private javax.swing.JTextField txtData;
-    private javax.swing.JTextField txtMicrochip;
+    private javax.swing.JTextField txtEspecie;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPeso;
     private javax.swing.JTextField txtRaca;
+    private javax.swing.JTextField txtTamanho;
     // End of variables declaration//GEN-END:variables
 
     public void setAnimal(Animal a) {
         txtNome.setText(a.getNome());
+        txtEspecie.setText(a.getEspecie());
         txtRaca.setText(a.getRaca());
+        cmbSexo.setSelectedItem(a.getSexo());
         txtCor.setText(a.getCor());
         txtPeso.setText(String.valueOf(a.getPeso()));
-        txtMicrochip.setText(a.getMicrochip());
+        txtTamanho.setText(String.valueOf(a.getTamanho()));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if (a.getDataNascimento() != null) {
             txtData.setText(a.getDataNascimento().format(formatter));
-        }
-
-        switch (a.getTamanho()) {
-            case 1:
-                cmbTamanho.setSelectedItem("Pequeno porte");
-                break;
-            case 2:
-                cmbTamanho.setSelectedItem("Medio porte");
-                break;
-            case 3:
-                cmbTamanho.setSelectedItem("Grande porte");
-                break;
-            default:
-                cmbTamanho.setSelectedIndex(0);
         }
 
         // CAIXA

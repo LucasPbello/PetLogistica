@@ -2,23 +2,19 @@ package classes;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author bello
- */
 public class Animal {
 
     private int idAnimal;
     private String nome;
+    private String especie;
     private String raca;
+    private String sexo;
     private String cor;
     private double peso;
-    private int tamanho;
+    private double tamanho;
     private int caixaTransporte;
     private LocalDate dataNascimento;
-    private String microchip;
 
-    private byte[] carteirinha;
     private byte[] documentos;
     private byte[] imagens;
 
@@ -44,12 +40,28 @@ public class Animal {
         this.nome = nome;
     }
 
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
     public String getRaca() {
         return raca;
     }
 
     public void setRaca(String raca) {
         this.raca = raca;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     public String getCor() {
@@ -68,11 +80,11 @@ public class Animal {
         this.peso = peso;
     }
 
-    public int getTamanho() {
+    public double getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(int tamanho) {
+    public void setTamanho(double tamanho) {
         this.tamanho = tamanho;
     }
 
@@ -92,21 +104,6 @@ public class Animal {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getMicrochip() {
-        return microchip;
-    }
-
-    public void setMicrochip(String microchip) {
-        this.microchip = microchip;
-    }
-
-    public byte[] getCarteirinha() {
-        return carteirinha;
-    }
-
-    public void setCarteirinha(byte[] carteirinha) {
-        this.carteirinha = carteirinha;
-    }
 
     public byte[] getDocumentos() {
         return documentos;

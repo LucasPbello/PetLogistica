@@ -18,23 +18,33 @@ public class AnimalDAO {
     // CREATE
     public void inserir(Animal animal) {
         String sql = "INSERT INTO Animal "
-                + "(nome, raca, cor, peso, tamanho, caixaTransporte, dataNascimento, microchip, carteirinha, documentos, imagens, idCliente) "
+                + "(nome, especie, raca, sexo, cor, peso, tamanho, caixaTransporte, dataNascimento, documentos, imagens, idCliente) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, animal.getNome());
-            stmt.setString(2, animal.getRaca());
-            stmt.setString(3, animal.getCor());
-            stmt.setDouble(4, animal.getPeso());
-            stmt.setInt(5, animal.getTamanho());
-            stmt.setInt(6, animal.getCaixaTransporte());
-            stmt.setDate(7, Date.valueOf(animal.getDataNascimento()));
-            stmt.setString(8, animal.getMicrochip());
+            stmt.setString(2, animal.getEspecie());
+            stmt.setString(3, animal.getRaca());
+            stmt.setString(4, animal.getSexo());
+            stmt.setString(5, animal.getCor());
+            stmt.setDouble(6, animal.getPeso());
+            stmt.setDouble(7, animal.getTamanho());
+            stmt.setInt(8, animal.getCaixaTransporte());
+            stmt.setDate(9, Date.valueOf(animal.getDataNascimento()));
 
-            stmt.setBytes(9, animal.getCarteirinha());
-            stmt.setBytes(10, animal.getDocumentos());
-            stmt.setBytes(11, animal.getImagens());
+            if (animal.getDocumentos() != null) {
+                stmt.setBytes(10, animal.getDocumentos());
+            } else {
+                stmt.setNull(10, java.sql.Types.BLOB);
+            }
+
+           // IMAGENS
+            if (animal.getImagens() != null) {
+                stmt.setBytes(11, animal.getImagens());
+            } else {
+                stmt.setNull(11, java.sql.Types.BLOB);
+            }
 
             stmt.setInt(12, animal.getCliente().getIdCliente());
 
@@ -60,17 +70,17 @@ public class AnimalDAO {
 
                 a.setIdAnimal(rs.getInt("idAnimal"));
                 a.setNome(rs.getString("nome"));
+                a.setEspecie(rs.getString("especie"));
                 a.setRaca(rs.getString("raca"));
+                a.setSexo(rs.getString("sexo"));
                 a.setCor(rs.getString("cor"));
                 a.setPeso(rs.getDouble("peso"));
-                a.setTamanho(rs.getInt("tamanho"));
-                a.setCaixaTransporte(rs.getInt("caixaTransporte"));
-                a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
-                a.setMicrochip(rs.getString("microchip"));
+                if (rs.getDate("dataNascimento") != null) {
+                    a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
+                }
 
-                a.setCarteirinha(rs.getBytes("carteirinha"));
-                a.setDocumentos(rs.getBytes("documentos"));
-                a.setImagens(rs.getBytes("imagens"));
+                a.setTamanho(rs.getDouble("tamanho"));
+                a.setCaixaTransporte(rs.getInt("caixaTransporte"));
 
                 // Relacionamentos (somente ID)
                 Cliente c = new Cliente();
@@ -83,6 +93,54 @@ public class AnimalDAO {
 
         } catch (SQLException e) {
             System.out.println("Erro ao listar Animal: " + e.getMessage());
+        }
+
+        return lista;
+    }
+
+    public List<Animal> buscarPorNome(String nome) {
+        List<Animal> lista = new ArrayList<>();
+
+        String sql = "SELECT a.*, c.nome AS nomeCliente "
+                + "FROM Animal a "
+                + "LEFT JOIN Cliente c ON a.idCliente = c.idCliente "
+                + "WHERE a.nome LIKE ?";
+
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + nome + "%");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Animal a = new Animal();
+
+                a.setIdAnimal(rs.getInt("idAnimal"));
+                a.setNome(rs.getString("nome"));
+                a.setEspecie(rs.getString("especie"));
+                a.setRaca(rs.getString("raca"));
+                a.setSexo(rs.getString("sexo"));
+                a.setPeso(rs.getDouble("peso"));
+                a.setCor(rs.getString("cor"));
+
+                if (rs.getDate("dataNascimento") != null) {
+                    a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
+                }
+
+                a.setTamanho(rs.getDouble("tamanho"));
+                a.setCaixaTransporte(rs.getInt("caixaTransporte"));
+
+                // ? CORREÇÃO IMPORTANTE (cliente)
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("idCliente"));
+                c.setNome(rs.getString("nomeCliente"));
+                a.setCliente(c);
+
+                lista.add(a);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return lista;
@@ -103,18 +161,17 @@ public class AnimalDAO {
 
                 a.setIdAnimal(rs.getInt("idAnimal"));
                 a.setNome(rs.getString("nome"));
+                a.setEspecie(rs.getString("especie"));
                 a.setRaca(rs.getString("raca"));
+                a.setSexo(rs.getString("sexo"));
                 a.setCor(rs.getString("cor"));
                 a.setPeso(rs.getDouble("peso"));
-                a.setTamanho(rs.getInt("tamanho"));
+                if (rs.getDate("dataNascimento") != null) {
+                    a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
+                }
+
+                a.setTamanho(rs.getDouble("tamanho"));
                 a.setCaixaTransporte(rs.getInt("caixaTransporte"));
-                a.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
-                a.setMicrochip(rs.getString("microchip"));
-
-                a.setCarteirinha(rs.getBytes("carteirinha"));
-                a.setDocumentos(rs.getBytes("documentos"));
-                a.setImagens(rs.getBytes("imagens"));
-
                 Cliente c = new Cliente();
                 c.setIdCliente(rs.getInt("idCliente"));
                 a.setCliente(c);
@@ -130,22 +187,22 @@ public class AnimalDAO {
 
     // UPDATE
     public void atualizar(Animal animal) {
-        String sql = "UPDATE Animal SET nome=?, raca=?, cor=?, peso=?, tamanho=?, caixaTransporte=?, "
-                + "dataNascimento=?, microchip=?, carteirinha=?, documentos=?, imagens=?, idCliente=? "
+        String sql = "UPDATE Animal SET nome=?, especie=?, raca=?, sexo=?, cor=?, peso=?, tamanho=?, caixaTransporte=?, "
+                + "dataNascimento=?, documentos=?, imagens=?, idCliente=? "
                 + "WHERE idAnimal=?";
 
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, animal.getNome());
-            stmt.setString(2, animal.getRaca());
-            stmt.setString(3, animal.getCor());
-            stmt.setDouble(4, animal.getPeso());
-            stmt.setInt(5, animal.getTamanho());
-            stmt.setInt(6, animal.getCaixaTransporte());
-            stmt.setDate(7, Date.valueOf(animal.getDataNascimento()));
-            stmt.setString(8, animal.getMicrochip());
+            stmt.setString(2, animal.getEspecie());
+            stmt.setString(3, animal.getRaca());
+            stmt.setString(4, animal.getSexo());
+            stmt.setString(5, animal.getCor());
+            stmt.setDouble(6, animal.getPeso());
+            stmt.setDouble(7, animal.getTamanho());
+            stmt.setInt(8, animal.getCaixaTransporte());
+            stmt.setDate(9, Date.valueOf(animal.getDataNascimento()));
 
-            stmt.setBytes(9, animal.getCarteirinha());
             stmt.setBytes(10, animal.getDocumentos());
             stmt.setBytes(11, animal.getImagens());
 
