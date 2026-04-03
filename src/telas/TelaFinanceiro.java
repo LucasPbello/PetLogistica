@@ -26,6 +26,8 @@ public class TelaFinanceiro extends javax.swing.JFrame {
 
     private Financeiro financeiro = new Financeiro();
     Usuario usuario = Sessao.getUsuario();
+    private boolean editando = false;
+    private int idAtual = 0;
 
     public void limparCampos() {
         txtClienteTotal.setText("");
@@ -58,6 +60,7 @@ public class TelaFinanceiro extends javax.swing.JFrame {
         lblCliente = new javax.swing.JLabel();
         cmbCliente = new javax.swing.JComboBox<>();
         txtClienteSinal = new javax.swing.JTextField();
+        btnAtualizar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -140,6 +143,11 @@ public class TelaFinanceiro extends javax.swing.JFrame {
         btnLista.setText("LISTA FINANCEIRA");
         btnLista.setToolTipText("Navega até a lista financeira");
         btnLista.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListaActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -184,6 +192,17 @@ public class TelaFinanceiro extends javax.swing.JFrame {
         txtClienteSinal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtClienteSinal.setToolTipText("Digitar valor pago de sinal pelo cliente");
 
+        btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAtualizar.setText("ATUALIZAR");
+        btnAtualizar.setToolTipText("Atualizar dados financeiros");
+        btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -194,43 +213,48 @@ public class TelaFinanceiro extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addGap(250, 250, 250))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnLista, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblClienteTotal)
-                                .addGap(24, 24, 24)
-                                .addComponent(txtClienteTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(62, 62, 62)
-                                .addComponent(lblClienteSinal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lblFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtFuncionarios))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lblGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(28, 28, 28)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtLucro)
-                                        .addComponent(cmbCliente, 0, 317, Short.MAX_VALUE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtClienteSinal)))
+                                        .addComponent(lblClienteTotal)
+                                        .addGap(24, 24, 24)
+                                        .addComponent(txtClienteTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(62, 62, 62)
+                                        .addComponent(lblClienteSinal, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(lblFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(txtFuncionarios))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(lblGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(txtGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(28, 28, 28)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtLucro)
+                                                .addComponent(cmbCliente, 0, 317, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtClienteSinal))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(261, 261, 261)
+                        .addComponent(btnLista, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -266,8 +290,10 @@ public class TelaFinanceiro extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar)
-                    .addComponent(btnLista)
-                    .addComponent(btnVoltar))
+                    .addComponent(btnVoltar)
+                    .addComponent(btnAtualizar))
+                .addGap(35, 35, 35)
+                .addComponent(btnLista)
                 .addGap(50, 50, 50))
         );
 
@@ -356,12 +382,26 @@ public class TelaFinanceiro extends javax.swing.JFrame {
 
             financeiro.setCliente(clienteSelecionado);
 
-            // ? SALVAR
-            dao.inserir(financeiro);
+            if (editando) {
 
-            JOptionPane.showMessageDialog(null, "Financeiro salvo com sucesso!");
+                financeiro.setIdFinanceiro(idAtual);
+                dao.atualizar(financeiro);
+
+                JOptionPane.showMessageDialog(null, "Financeiro atualizado com sucesso!");
+
+            } else {
+
+                dao.inserir(financeiro);
+
+                JOptionPane.showMessageDialog(null, "Financeiro salvo com sucesso!");
+            }
 
             limparCampos();
+
+            // RESETAR MODO
+            editando = false;
+            idAtual = 0;
+            btnSalvar.setEnabled(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + e.getMessage());
@@ -389,6 +429,67 @@ public class TelaFinanceiro extends javax.swing.JFrame {
         calcularLucro();
     }//GEN-LAST:event_txtGastoKeyReleased
 
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            FinanceiroDAO dao = new FinanceiroDAO();
+
+            // ? VALIDAÇÃO DE EDIÇÃO
+            if (!editando || financeiro.getIdFinanceiro() == 0) {
+                JOptionPane.showMessageDialog(null, "Selecione um financeiro para atualizar!");
+                return;
+            }
+
+            // ? VALIDAÇÃO DE CAMPOS
+            if (txtClienteTotal.getText().isEmpty()
+                    || txtClienteSinal.getText().isEmpty()
+                    || txtFuncionarios.getText().isEmpty()
+                    || txtGasto.getText().isEmpty()
+                    || cmbCliente.getSelectedIndex() == -1) {
+
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+                return;
+            }
+
+            // ? CONVERSÃO CORRETA (String ? BigDecimal)
+            BigDecimal total = new BigDecimal(txtClienteTotal.getText().replace(",", "."));
+            BigDecimal sinal = new BigDecimal(txtClienteSinal.getText().replace(",", "."));
+            BigDecimal funcionarios = new BigDecimal(txtFuncionarios.getText().replace(",", "."));
+            BigDecimal gasto = new BigDecimal(txtGasto.getText().replace(",", "."));
+
+            financeiro.setClienteTotal(total);
+            financeiro.setClienteSinal(sinal);
+            financeiro.setPagamentoFuncionarios(funcionarios);
+            financeiro.setGastoEmpresa(gasto);
+
+            // ? RECALCULAR LUCRO
+            BigDecimal lucro = total.subtract(funcionarios.add(gasto));
+            financeiro.setLucroTotal(lucro);
+
+            // ? CLIENTE
+            Cliente clienteSelecionado = listaClientes.get(cmbCliente.getSelectedIndex());
+            financeiro.setCliente(clienteSelecionado);
+
+            // ? ATUALIZAR
+            dao.atualizar(financeiro);
+
+            JOptionPane.showMessageDialog(null, "Financeiro atualizado com sucesso!");
+
+            limparCampos();
+            editando = false;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaActionPerformed
+        ListaFinanceiro fre = new ListaFinanceiro();
+
+        fre.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnListaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,6 +516,7 @@ public class TelaFinanceiro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnLista;
     private javax.swing.JButton btnSalvar;
@@ -473,5 +575,25 @@ public class TelaFinanceiro extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar combos: " + e.getMessage());
         }
+    }
+
+    public void setFinanceiro(Financeiro f) {
+        this.financeiro = f;
+
+        txtClienteTotal.setText(f.getClienteTotal().toString());
+        txtClienteSinal.setText(f.getClienteSinal().toString());
+        txtFuncionarios.setText(f.getPagamentoFuncionarios().toString());
+        txtGasto.setText(f.getGastoEmpresa().toString());
+        txtLucro.setText(f.getLucroTotal().toString());
+
+        // selecionar cliente no combo
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if (listaClientes.get(i).getIdCliente() == f.getCliente().getIdCliente()) {
+                cmbCliente.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        editando = true;
     }
 }

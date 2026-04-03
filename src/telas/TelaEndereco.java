@@ -480,7 +480,7 @@ public class TelaEndereco extends javax.swing.JFrame {
                     || txtCidade.getText().isEmpty()
                     || txtEstado.getText().isEmpty()) {
 
-                JOptionPane.showMessageDialog(null, "Buscar cliente na tabela para atualizar!");
+                JOptionPane.showMessageDialog(null, "Selecionar endereço na tabela para atualizar!");
                 return;
             }
 

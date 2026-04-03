@@ -57,7 +57,7 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -99,15 +99,15 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="btnPesquisar" min="-2" pref="140" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="btnAtualizar" min="-2" pref="140" max="-2" attributes="0"/>
                   <EmptySpace pref="50" max="32767" attributes="0"/>
+                  <Component id="btnAtualizar" min="-2" pref="140" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="btnExcluir" min="-2" pref="140" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="btnVoltar" min="-2" pref="140" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblPesquisar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -156,7 +156,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="36" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Lista de endere&#xe7;os"/>
+            <Property name="text" type="java.lang.String" value="Lista de taxi"/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
         </Component>
@@ -164,20 +164,16 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblEndereco">
+            <Component class="javax.swing.JTable" name="tblTaxi">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="8" rowCount="0">
+                  <Table columnCount="4" rowCount="0">
                     <Column editable="true" title="ID" type="java.lang.Integer"/>
-                    <Column editable="true" title="Rua" type="java.lang.Object"/>
-                    <Column editable="true" title="N&#xfa;mero" type="java.lang.Object"/>
-                    <Column editable="true" title="Bairro" type="java.lang.Object"/>
-                    <Column editable="true" title="CEP" type="java.lang.Object"/>
-                    <Column editable="true" title="Cidade" type="java.lang.Object"/>
-                    <Column editable="true" title="Estado" type="java.lang.Object"/>
+                    <Column editable="true" title="Endere&#xe7;o de coleta" type="java.lang.Object"/>
+                    <Column editable="true" title="Endere&#xe7;o de entrega" type="java.lang.Object"/>
                     <Column editable="true" title="Cliente" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -221,7 +217,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="VOLTAR"/>
-            <Property name="toolTipText" type="java.lang.String" value="Voltar para a tela de endere&#xe7;os"/>
+            <Property name="toolTipText" type="java.lang.String" value="Voltar para a tela de taxi"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -261,7 +257,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="EXCLUIR"/>
-            <Property name="toolTipText" type="java.lang.String" value="Bot&#xe3;o para excluir dados de endere&#xe7;o do cliente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Bot&#xe3;o para excluir dados do taxi"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -281,7 +277,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ATUALIZAR"/>
-            <Property name="toolTipText" type="java.lang.String" value="Bot&#xe3;o para atualizar dados de endere&#xe7;o do cliente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Bot&#xe3;o para atualizar dados do taxi"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>

@@ -24,6 +24,8 @@ public class TelaTaxi extends javax.swing.JFrame {
 
     private Taxi taxi = new Taxi();
     Usuario usuario = Sessao.getUsuario();
+    private boolean editando = false;
+    private int idAtual = 0;
 
     public void limparCampos() {
         txtColeta.setText("");
@@ -48,6 +50,7 @@ public class TelaTaxi extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         lblCliente = new javax.swing.JLabel();
         cmbCliente = new javax.swing.JComboBox<>();
+        btnAtualizar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -118,6 +121,11 @@ public class TelaTaxi extends javax.swing.JFrame {
         btnLista.setText("LISTA DOS TAXI");
         btnLista.setToolTipText("Navega até a lista de taxi");
         btnLista.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListaActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -138,6 +146,17 @@ public class TelaTaxi extends javax.swing.JFrame {
         cmbCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbCliente.setToolTipText("Buscar nome do cliente da coleta e entrega do pet");
 
+        btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAtualizar.setText("ATUALIZAR");
+        btnAtualizar.setToolTipText("Atualizar dados de taxi");
+        btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -153,7 +172,7 @@ public class TelaTaxi extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
-                                .addComponent(btnLista, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
                                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -170,6 +189,10 @@ public class TelaTaxi extends javax.swing.JFrame {
                         .addGap(158, 158, 158)
                         .addComponent(jLabel11)))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnLista, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(275, 275, 275))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,8 +217,10 @@ public class TelaTaxi extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar)
-                    .addComponent(btnLista)
-                    .addComponent(btnVoltar))
+                    .addComponent(btnVoltar)
+                    .addComponent(btnAtualizar))
+                .addGap(35, 35, 35)
+                .addComponent(btnLista)
                 .addGap(50, 50, 50))
         );
 
@@ -288,12 +313,26 @@ public class TelaTaxi extends javax.swing.JFrame {
 
             taxi.setCliente(clienteSelecionado);
 
-            // ? SALVAR
-            dao.inserir(taxi);
+            if (editando) {
 
-            JOptionPane.showMessageDialog(null, "Taxi salvo com sucesso!");
+                taxi.setIdTaxi(idAtual);
+                dao.atualizar(taxi);
+
+                JOptionPane.showMessageDialog(null, "Taxi atualizado com sucesso!");
+
+            } else {
+
+                dao.inserir(taxi);
+
+                JOptionPane.showMessageDialog(null, "Taxi salvo com sucesso!");
+            }
 
             limparCampos();
+
+            // RESETAR MODO
+            editando = false;
+            idAtual = 0;
+            btnSalvar.setEnabled(true);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + e.getMessage());
@@ -308,6 +347,39 @@ public class TelaTaxi extends javax.swing.JFrame {
         new TelaClasses(usuario).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaActionPerformed
+        ListaTaxi fre = new ListaTaxi();
+
+        fre.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnListaActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        try {
+            TaxiDAO dao = new TaxiDAO();
+
+            // VALIDAÇÃO
+            if (txtColeta.getText().isEmpty()
+                    || txtEntrega.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(null, "Selecionar endereço na tabela para atualizar!");
+                return;
+            }
+
+            taxi.setEnderecoColeta(txtColeta.getText());
+            taxi.setEnderecoEntrega(txtEntrega.getText());
+
+            dao.atualizar(taxi);
+
+            JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!");
+
+            limparCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -335,6 +407,7 @@ public class TelaTaxi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnLista;
     private javax.swing.JButton btnSalvar;
@@ -372,6 +445,27 @@ public class TelaTaxi extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar combos: " + e.getMessage());
         }
+    }
+
+    public void setTaxi(Taxi t) {
+        this.taxi = t;
+
+        txtColeta.setText(t.getEnderecoColeta());
+        txtEntrega.setText(t.getEnderecoEntrega());
+
+        // selecionar cliente no combo
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if (listaClientes.get(i).getIdCliente() == t.getCliente().getIdCliente()) {
+                cmbCliente.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        idAtual = t.getIdTaxi();
+        editando = true;
+
+        btnSalvar.setEnabled(false); // ? BLOQUEIA SALVAR
+
     }
 
 }

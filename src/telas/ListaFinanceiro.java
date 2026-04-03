@@ -1,18 +1,16 @@
 package telas;
 
-import classes.Cliente;
-import classes.Endereco;
-import dao.ClienteDAO;
-import dao.EnderecoDAO;
+import classes.Financeiro;
+import dao.FinanceiroDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ListaEndereco extends javax.swing.JFrame {
+public class ListaFinanceiro extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaEndereco.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaFinanceiro.class.getName());
 
-    public ListaEndereco() {
+    public ListaFinanceiro() {
         initComponents();
         carregarTabela();
     }
@@ -24,7 +22,7 @@ public class ListaEndereco extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         scrlLista = new javax.swing.JScrollPane();
-        tblEndereco = new javax.swing.JTable();
+        tblFinanceiro = new javax.swing.JTable();
         lblPesquisar = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txtPesquisar = new javax.swing.JTextField();
@@ -43,27 +41,27 @@ public class ListaEndereco extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(51, 51, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Lista de endereços");
+        jLabel1.setText("Lista Financeiro");
         jLabel1.setOpaque(true);
 
-        tblEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblEndereco.setModel(new javax.swing.table.DefaultTableModel(
+        tblFinanceiro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblFinanceiro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Rua", "Número", "Bairro", "CEP", "Cidade", "Estado", "Cliente"
+                "ID", "Pagamento total", "Pagamento sinal", "Gastos da empresa", "Pagamento funcionários", "Lucro total", "Cliente"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        scrlLista.setViewportView(tblEndereco);
+        scrlLista.setViewportView(tblFinanceiro);
 
         lblPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblPesquisar.setText("Pesquisar cliente por nome:");
@@ -78,7 +76,7 @@ public class ListaEndereco extends javax.swing.JFrame {
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnVoltar.setText("VOLTAR");
-        btnVoltar.setToolTipText("Voltar para a tela de endereços");
+        btnVoltar.setToolTipText("Voltar para a tela de financeiro");
         btnVoltar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +87,7 @@ public class ListaEndereco extends javax.swing.JFrame {
         btnPesquisar.setBackground(new java.awt.Color(255, 255, 0));
         btnPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPesquisar.setText("PESQUISAR");
-        btnPesquisar.setToolTipText("Botão para pesquisar endereços através do nome do cliente");
+        btnPesquisar.setToolTipText("Botão para pesquisar financeiro através do nome do cliente");
         btnPesquisar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +98,7 @@ public class ListaEndereco extends javax.swing.JFrame {
         btnExcluir.setBackground(new java.awt.Color(255, 51, 51));
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnExcluir.setText("EXCLUIR");
-        btnExcluir.setToolTipText("Botão para excluir dados de endereço do cliente");
+        btnExcluir.setToolTipText("Botão para excluir dados do financeiro");
         btnExcluir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,7 +109,7 @@ public class ListaEndereco extends javax.swing.JFrame {
         btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("ATUALIZAR");
-        btnAtualizar.setToolTipText("Botão para atualizar dados de endereço do cliente");
+        btnAtualizar.setToolTipText("Botão para atualizar dados do financeiro");
         btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,9 +126,9 @@ public class ListaEndereco extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -213,13 +211,13 @@ public class ListaEndereco extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVoltarActionPerformed
-        TelaEndereco fre = new TelaEndereco();
+        TelaFinanceiro fre = new TelaFinanceiro();
 
         fre.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_mniVoltarActionPerformed
 
     private void mniSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSairActionPerformed
@@ -227,7 +225,7 @@ public class ListaEndereco extends javax.swing.JFrame {
     }//GEN-LAST:event_mniSairActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        TelaEndereco fre = new TelaEndereco();
+        TelaFinanceiro fre = new TelaFinanceiro();
 
         fre.setVisible(true);
         this.dispose();
@@ -237,12 +235,12 @@ public class ListaEndereco extends javax.swing.JFrame {
         try {
             String nome = txtPesquisar.getText();
 
-            EnderecoDAO dao = new EnderecoDAO();
-            DefaultTableModel modelo = (DefaultTableModel) tblEndereco.getModel();
+            FinanceiroDAO dao = new FinanceiroDAO();
+            DefaultTableModel modelo = (DefaultTableModel) tblFinanceiro.getModel();
 
             modelo.setRowCount(0);
 
-            List<Endereco> lista;
+            List<Financeiro> lista;
 
             if (nome.isEmpty()) {
                 lista = dao.listar();
@@ -251,39 +249,37 @@ public class ListaEndereco extends javax.swing.JFrame {
             }
 
             if (lista.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Nenhum endereço encontrado!");
+                JOptionPane.showMessageDialog(null, "Nenhum financeiro encontrado!");
                 return;
             }
 
-            for (Endereco e : lista) {
+            for (Financeiro f : lista) {
                 modelo.addRow(new Object[]{
-                    e.getIdEndereco(),
-                    e.getRua(),
-                    e.getNumero(),
-                    e.getBairro(),
-                    e.getCep(),
-                    e.getCidade(),
-                    e.getEstado(),
-                    e.getCliente().getNome()
+                    f.getIdFinanceiro(),
+                    f.getClienteTotal(),
+                    f.getClienteSinal(),
+                    f.getGastoEmpresa(),
+                    f.getPagamentoFuncionarios(),
+                    f.getLucroTotal(),
+                    f.getCliente() != null ? f.getCliente().getNome() : "Sem cliente"
                 });
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao pesquisar: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
-            int linha = tblEndereco.getSelectedRow();
+            int linha = tblFinanceiro.getSelectedRow();
 
             if (linha == -1) {
                 JOptionPane.showMessageDialog(null, "Selecione um cliente!");
                 return;
             }
 
-            int idEndereco = (int) tblEndereco.getValueAt(linha, 0);
+            int idFinanceiro = (int) tblFinanceiro.getValueAt(linha, 0);
 
             // Confirmação
             int confirm = JOptionPane.showConfirmDialog(
@@ -298,15 +294,12 @@ public class ListaEndereco extends javax.swing.JFrame {
             }
 
             // Excluir
-            EnderecoDAO dao = new EnderecoDAO();
-            dao.deletar(idEndereco);
+            FinanceiroDAO dao = new FinanceiroDAO();
+            dao.deletar(idFinanceiro);
 
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
 
             carregarTabela();
-
-            // ? Atualizar tabela
-            ((DefaultTableModel) tblEndereco.getModel()).removeRow(linha);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
@@ -314,7 +307,7 @@ public class ListaEndereco extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        int linha = tblEndereco.getSelectedRow();
+        int linha = tblFinanceiro.getSelectedRow();
 
         if (linha == -1) {
             JOptionPane.showMessageDialog(null, "Selecione um endereço!");
@@ -322,15 +315,15 @@ public class ListaEndereco extends javax.swing.JFrame {
         }
 
         // ? PEGAR APENAS O ID
-        int id = (int) tblEndereco.getValueAt(linha, 0);
+        int id = (int) tblFinanceiro.getValueAt(linha, 0);
 
         // ? BUSCAR DO BANCO
-        EnderecoDAO dao = new EnderecoDAO();
-        Endereco e = dao.buscarPorId(id);
+        FinanceiroDAO dao = new FinanceiroDAO();
+        Financeiro f = dao.buscarPorId(id);
 
         // ? ABRIR TELA COM OBJETO COMPLETO
-        TelaEndereco tela = new TelaEndereco();
-        tela.setEndereco(e);
+        TelaFinanceiro tela = new TelaFinanceiro();
+        tela.setFinanceiro(f);
         tela.setVisible(true);
 
         this.dispose();
@@ -358,7 +351,7 @@ public class ListaEndereco extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ListaEndereco().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ListaFinanceiro().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -375,33 +368,33 @@ public class ListaEndereco extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniSair;
     private javax.swing.JMenuItem mniVoltar;
     private javax.swing.JScrollPane scrlLista;
-    private javax.swing.JTable tblEndereco;
+    private javax.swing.JTable tblFinanceiro;
     private javax.swing.JTextField txtPesquisar;
     // End of variables declaration//GEN-END:variables
-
+ 
     public void carregarTabela() {
+       
         try {
-            EnderecoDAO dao = new EnderecoDAO();
+            FinanceiroDAO dao = new FinanceiroDAO();
 
-            DefaultTableModel modelo = (DefaultTableModel) tblEndereco.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblFinanceiro.getModel();
             modelo.setRowCount(0); // limpa tabela
 
-            for (Endereco e : dao.listar()) {
+            for (Financeiro f : dao.listar()) {
                 modelo.addRow(new Object[]{
-                    e.getIdEndereco(),
-                    e.getRua(),
-                    e.getNumero(),
-                    e.getBairro(),
-                    e.getCep(),
-                    e.getCidade(),
-                    e.getEstado(),
-                    e.getCliente().getNome()
+                    f.getIdFinanceiro(),
+                    f.getClienteTotal(),
+                    f.getClienteSinal(),
+                    f.getGastoEmpresa(),
+                    f.getPagamentoFuncionarios(),
+                    f.getLucroTotal(),
+                    f.getCliente().getNome()
                 });
             }
 
-            tblEndereco.getColumnModel().getColumn(0).setMaxWidth(60);
+            tblFinanceiro.getColumnModel().getColumn(0).setMaxWidth(60);
 
-            tblEndereco.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+            tblFinanceiro.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar tabela: " + e.getMessage());
