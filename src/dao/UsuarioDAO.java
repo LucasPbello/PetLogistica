@@ -28,7 +28,7 @@ public class UsuarioDAO {
             if (rs.next()) {
                 String usuarioLogin = rs.getString("login");
                 String usuarioSenha = rs.getString("senha");
-                String tipoStr = rs.getString("tipo").toUpperCase();
+                String tipoStr = rs.getString("tipo");
 
                 return new Usuario(usuarioLogin, usuarioSenha, tipoStr);
             }

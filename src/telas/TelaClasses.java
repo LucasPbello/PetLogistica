@@ -308,6 +308,7 @@ public class TelaClasses extends javax.swing.JFrame {
         Login fre = new Login();
 
         fre.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**

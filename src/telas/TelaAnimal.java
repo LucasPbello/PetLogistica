@@ -249,7 +249,7 @@ public class TelaAnimal extends javax.swing.JFrame {
         });
 
         cmbCaixa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbCaixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caixa 200", "Caixa 300", "Caixa 400", "Caixa 500", "Caixa 700" }));
+        cmbCaixa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caixa 200", "Caixa 300", "Caixa 400", "Caixa 500", "Caixa 700", " " }));
         cmbCaixa.setToolTipText("Escolher qual caixa e mais adequada para o tamanho do pet");
 
         lblCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

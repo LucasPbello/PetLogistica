@@ -6,6 +6,7 @@ import classes.Usuario;
 import dao.UsuarioDAO;
 import javax.swing.JOptionPane;
 import permissoes.Sessao;
+import telas.TelaClasses;
 
 
 public class Login extends javax.swing.JFrame {
@@ -131,32 +132,23 @@ public class Login extends javax.swing.JFrame {
         String login = txtLogin.getText();
         String senha = txtSenha.getText();
 
-        // LOGIN FIXO (GERENTE)
-        if (login.equals("gerente") && senha.equals("123")) {
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usuario = dao.validarLogin(login, senha);
 
-            Usuario gerente = new Usuario(login, senha, "Gerente");
+        if (usuario != null) {
 
-            Sessao.setUsuario(gerente);
+            Sessao.setUsuario(usuario);
 
-            new TelaClasses(gerente).setVisible(true);
+            new TelaClasses(usuario).setVisible(true);
             this.dispose();
 
         } else {
             JOptionPane.showMessageDialog(null, "Login inválido!");
         }
-    
-    //UsuarioDAO usuarioDAO = new UsuarioDAO();
-    //Usuario usuario = usuarioDAO.validarLogin(login, senha);
 
-    //if (usuario != null) {
-    // Sessao.setUsuario(usuario);
-    // TelaClasses tela = new TelaClasses(usuario);
-    //tela.setVisible(true);
-    // this.dispose();
-    // } else {
-    //  JOptionPane.showMessageDialog(this, "Login ou senha incorretos!");
-    // }
-    // usuarioDAO.desconectar();
+        dao.desconectar();
+    
+
 
     }//GEN-LAST:event_btnLoginActionPerformed
 

@@ -67,7 +67,7 @@ public class ListaOrigemDestino extends javax.swing.JFrame {
         scrlLista.setViewportView(tblViagens);
 
         lblPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblPesquisar.setText("Pesquisar por animal:");
+        lblPesquisar.setText("Pesquisar por pet:");
         lblPesquisar.setToolTipText("Pesquisar cliente por nome");
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
@@ -79,7 +79,7 @@ public class ListaOrigemDestino extends javax.swing.JFrame {
         btnVoltar.setBackground(new java.awt.Color(153, 153, 255));
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnVoltar.setText("VOLTAR");
-        btnVoltar.setToolTipText("Voltar para a tela de clientes");
+        btnVoltar.setToolTipText("Voltar para a tela de pets");
         btnVoltar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +90,7 @@ public class ListaOrigemDestino extends javax.swing.JFrame {
         btnPesquisar.setBackground(new java.awt.Color(255, 255, 0));
         btnPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPesquisar.setText("PESQUISAR");
-        btnPesquisar.setToolTipText("Botão para pesquisar cliente");
+        btnPesquisar.setToolTipText("Botão para pesquisar nome do pet");
         btnPesquisar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +101,7 @@ public class ListaOrigemDestino extends javax.swing.JFrame {
         btnExcluir.setBackground(new java.awt.Color(255, 51, 51));
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnExcluir.setText("EXCLUIR");
-        btnExcluir.setToolTipText("Botão para excluir dados do cliente");
+        btnExcluir.setToolTipText("Botão para excluir dados de endereço do pet");
         btnExcluir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +112,7 @@ public class ListaOrigemDestino extends javax.swing.JFrame {
         btnAtualizar.setBackground(new java.awt.Color(255, 0, 255));
         btnAtualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizar.setText("ATUALIZAR");
-        btnAtualizar.setToolTipText("Botão para atualizar dados do cliente");
+        btnAtualizar.setToolTipText("Botão para atualizar dados de endereço do pet");
         btnAtualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,6 +215,7 @@ public class ListaOrigemDestino extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVoltarActionPerformed

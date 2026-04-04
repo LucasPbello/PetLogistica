@@ -72,7 +72,7 @@ public class ListaTaxi extends javax.swing.JFrame {
         scrlLista.setViewportView(tblTaxi);
 
         lblPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblPesquisar.setText("Pesquisar cliente por nome:");
+        lblPesquisar.setText("Pesquisar taxi  por nome do cliente:");
         lblPesquisar.setToolTipText("Pesquisar cliente por nome");
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
@@ -219,6 +219,7 @@ public class ListaTaxi extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mniVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVoltarActionPerformed

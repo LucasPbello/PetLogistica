@@ -16,10 +16,7 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-   public Usuario(String login, String tipo) {
-        this.login = login;
-        this.tipo = tipo;
-   }
+   
 
     public Usuario() {
         
